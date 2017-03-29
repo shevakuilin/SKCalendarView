@@ -17,6 +17,7 @@
 		E46BB93B1E8B861400A1E1C7 /* SKCalendarManage.m in Sources */ = {isa = PBXBuildFile; fileRef = E46BB93A1E8B861400A1E1C7 /* SKCalendarManage.m */; };
 		E46BB9401E8B8EED00A1E1C7 /* SKDateSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = E46BB93F1E8B8EED00A1E1C7 /* SKDateSecurity.m */; };
 		E46BB9431E8B94A500A1E1C7 /* SKCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = E46BB9421E8B94A500A1E1C7 /* SKCalendarView.m */; };
+		E46BB9461E8B984000A1E1C7 /* SKCalendarCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E46BB9451E8B984000A1E1C7 /* SKCalendarCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,8 @@
 		E46BB93F1E8B8EED00A1E1C7 /* SKDateSecurity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKDateSecurity.m; sourceTree = "<group>"; };
 		E46BB9411E8B94A500A1E1C7 /* SKCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKCalendarView.h; sourceTree = "<group>"; };
 		E46BB9421E8B94A500A1E1C7 /* SKCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKCalendarView.m; sourceTree = "<group>"; };
+		E46BB9441E8B984000A1E1C7 /* SKCalendarCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKCalendarCollectionViewCell.h; sourceTree = "<group>"; };
+		E46BB9451E8B984000A1E1C7 /* SKCalendarCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKCalendarCollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +123,8 @@
 				E46BB93D1E8B8E6E00A1E1C7 /* SKConstant.h */,
 				E46BB9411E8B94A500A1E1C7 /* SKCalendarView.h */,
 				E46BB9421E8B94A500A1E1C7 /* SKCalendarView.m */,
+				E46BB9441E8B984000A1E1C7 /* SKCalendarCollectionViewCell.h */,
+				E46BB9451E8B984000A1E1C7 /* SKCalendarCollectionViewCell.m */,
 				E46BB9391E8B861400A1E1C7 /* SKCalendarManage.h */,
 				E46BB93A1E8B861400A1E1C7 /* SKCalendarManage.m */,
 				E46BB93E1E8B8EED00A1E1C7 /* SKDateSecurity.h */,
@@ -255,6 +260,7 @@
 				E46BB9401E8B8EED00A1E1C7 /* SKDateSecurity.m in Sources */,
 				E46BB93B1E8B861400A1E1C7 /* SKCalendarManage.m in Sources */,
 				E46BB9201E8B678400A1E1C7 /* ViewController.m in Sources */,
+				E46BB9461E8B984000A1E1C7 /* SKCalendarCollectionViewCell.m in Sources */,
 				E46BB91D1E8B678400A1E1C7 /* AppDelegate.m in Sources */,
 				E46BB91A1E8B678400A1E1C7 /* main.m in Sources */,
 			);
