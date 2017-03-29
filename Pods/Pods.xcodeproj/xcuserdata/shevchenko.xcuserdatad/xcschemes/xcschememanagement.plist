@@ -14,15 +14,25 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SKArchCutter.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>9DC8D9E02903E93BD0B2FEC9D846EA20</key>
+		<key>2085E2648926B8C2E6199DE9426191FE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A8AB1602D26043125CA7233E64420AA1</key>
+		<key>54756671C70E24177775986CCB8A5B2C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9DC8D9E02903E93BD0B2FEC9D846EA20</key>
 		<dict>
 			<key>primary</key>
 			<true/>

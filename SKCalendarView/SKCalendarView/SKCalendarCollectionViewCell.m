@@ -54,9 +54,9 @@
     [self.baseView addSubview:self.icon];
     [self.icon mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.baseView);
-        make.top.equalTo(self).with.offset(5);
+        make.top.equalTo(self.baseView);
         
-        make.size.mas_offset(CGSizeMake(35, 35));
+        make.size.mas_offset(CGSizeMake(25, 25));
     }];
     
     // 日期
@@ -65,7 +65,7 @@
     self.dateLabel.font = [UIFont systemFontOfSize:15];
     self.dateLabel.textAlignment = NSTextAlignmentCenter;
     [self.dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(self.icon);
+        make.centerY.equalTo(self.icon);
         make.left.equalTo(self.icon);
         make.right.equalTo(self.icon);
     }];
@@ -76,10 +76,10 @@
     self.titleLabel.font = [UIFont systemFontOfSize:10];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.icon);
-        make.bottom.equalTo(self);
-        make.left.equalTo(self);
-        make.right.equalTo(self);
+        make.top.equalTo(self.icon.mas_bottom).with.offset(2);
+        make.bottom.equalTo(self.baseView);
+        make.left.equalTo(self.baseView);
+        make.right.equalTo(self.baseView);
     }];
 }
 
@@ -120,7 +120,8 @@
 {
     _dateBackgroundColor = dateBackgroundColor;
     if (!isEmpty(dateBackgroundColor)) {
-        self.backgroundIcon.backgroundColor = dateBackgroundColor;
+        self.backgroundColor = dateBackgroundColor;
+        self.backgroundIcon.backgroundColor = self.backgroundColor;
     }
 }
 
@@ -151,11 +152,18 @@
 - (void)setEnableClickEffect:(BOOL)enableClickEffect
 {
     _enableClickEffect = enableClickEffect;
+    if (enableClickEffect == YES) {// 开启点击效果
+        
+    }
 }
 
 - (void)setEnableDateRoundCorner:(BOOL)enableDateRoundCorner
 {
     _enableDateRoundCorner = enableDateRoundCorner;
+    if (enableDateRoundCorner == YES) {// 开启圆角
+        SKArchCutter * archCutter = [[SKArchCutter alloc] init];
+        [archCutter cuttingWithObject:self.icon direction:UIRectCornerAllCorners cornerRadii:10];
+    }
 }
 
 @end

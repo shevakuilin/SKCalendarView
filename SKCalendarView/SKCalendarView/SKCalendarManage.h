@@ -14,8 +14,9 @@
 
 - (void)checkThisMonthRecordFromToday:(NSDate *)today;
 
-@property (copy, nonatomic) NSMutableArray * canlendarDate;
+@property (strong, nonatomic) NSMutableArray * calendarDate;
+@property (copy, nonatomic) NSArray * weekList;
 @property (assign, nonatomic) BOOL isIncreaseHeight;// 是否增加日历高度
-
+@property (assign, nonatomic) NSUInteger todayInMonth;// 今天在本月所处位置
 
 @end

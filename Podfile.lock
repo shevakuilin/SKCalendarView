@@ -1,12 +1,15 @@
 PODS:
   - Masonry (1.0.2)
+  - SKArchCutter (0.0.2)
 
 DEPENDENCIES:
   - Masonry (~> 1.0.2)
+  - SKArchCutter (~> 0.0.2)
 
 SPEC CHECKSUMS:
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  SKArchCutter: 642c9bf5e5213b62da1ca46087efa641fbbe8894
 
-PODFILE CHECKSUM: f2cd5a8a54c93e71ed58df2532996dbccea82e27
+PODFILE CHECKSUM: efe3d5652fc655e38c5f62a47533a10b7d32ae53
 
 COCOAPODS: 1.2.1.beta.1

@@ -9,8 +9,9 @@
 #ifndef SKConstant_h
 #define SKConstant_h
 
-#import <Masonry/Masonry.h>
 #import "SKDateSecurity.h"
+#import <Masonry/Masonry.h>
+#import <SKArchCutter/SKArchCutter.h>
 
 #define isEmpty(x)  [SKDateSecurity isNilOrEmpty:x]
 #define getNoneNil(object)  [SKDateSecurity getNoneNilString:object]
