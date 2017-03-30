@@ -79,6 +79,7 @@
     comps = [calendar components:unitFlags fromDate:date];
     self.dayInWeek = [comps weekday];// 是周几
     self.year = [comps year];
+    self.month = [comps month];
 }
 
 #pragma mark - 创建日历数组
@@ -310,7 +311,7 @@
     // 复活节, Meeus/Jones/Butcher算法
     NSUInteger a = self.year % 19;
     NSUInteger b = self.year / 100;
-    NSInteger c = self.year % 100;
+    NSUInteger c = self.year % 100;
     NSUInteger d = b / 4;
     NSUInteger e = b % 4;
     NSUInteger f = (b + 8) / 25;
@@ -321,7 +322,7 @@
     NSUInteger l = (32 + (2 * e) + (2 * i) - h - k) % 7;
     NSUInteger m = (a + (11 * h) + (22 * l)) / 451;
     NSUInteger theMonth = (h + l - (7 * m) + 114) / 31;
-    NSInteger day = ((h + l - (7 * m) + 114) % 31)+ 1;
+    NSUInteger day = ((h + l - (7 * m) + 114) % 31)+ 1;
     NSString * easter = [NSString stringWithFormat:@"0%@-%@", @(theMonth), @(day)];
     if ([easter isEqualToString:nowStr]) {
         chineseCal_str = @"复活节";

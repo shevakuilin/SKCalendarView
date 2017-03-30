@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UICollectionView * weekCollectionView;
 @property (nonatomic, strong) UICollectionView * calendarCollectionView;
 @property (nonatomic, strong) SKCalendarManage * calendarManage;
+@property (nonatomic, strong) UILabel * monthBackgroundLabel;
 
 @end
 
@@ -39,10 +40,10 @@
         _calendarManage = [SKCalendarManage manage];
         // 设置初始化日期，默认查看今天所处月份日历
         [_calendarManage checkThisMonthRecordFromToday:[NSDate date]];
+        self.monthBackgroundLabel.text = [NSString stringWithFormat:@"%@", @(_calendarManage.month)];
     }
     return _calendarManage;
 }
-
 
 #pragma mark - 创建界面
 - (void)customView
@@ -79,6 +80,16 @@
         make.left.equalTo(self);
         make.right.equalTo(self);
         make.bottom.equalTo(self);
+    }];
+    
+    // 背景月份
+    self.monthBackgroundLabel = [UILabel new];
+    [self addSubview:self.monthBackgroundLabel];
+    self.monthBackgroundLabel.textColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:200 / 2550.f];
+    self.monthBackgroundLabel.font = [UIFont systemFontOfSize:150.0f weight:120.f];
+    self.monthBackgroundLabel.textAlignment = NSTextAlignmentCenter;
+    [self.monthBackgroundLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self).with.insets(UIEdgeInsetsMake(0, 0, 0, 0));
     }];
 }
 
