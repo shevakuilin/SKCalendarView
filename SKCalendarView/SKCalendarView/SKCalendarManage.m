@@ -13,9 +13,6 @@
 @property (assign, nonatomic) NSUInteger days;// 本月天数
 @property (assign, nonatomic) NSUInteger dayInWeek;// 本月第一天是周几
 @property (assign, nonatomic) NSUInteger year;// 年
-@property (assign, nonatomic) NSUInteger month;// 月
-@property (assign, nonatomic) NSUInteger day;// 日
-
 
 @end
 
@@ -82,8 +79,6 @@
     comps = [calendar components:unitFlags fromDate:date];
     self.dayInWeek = [comps weekday];// 是周几
     self.year = [comps year];
-    self.month = [comps month];
-    self.day = [comps day];
 }
 
 #pragma mark - 创建日历数组
@@ -274,6 +269,10 @@
         chineseCal_str = @"元宵节";
     } else if ([m_str isEqualToString:@"五月"] && [d_str isEqualToString:@"初五"]) {
         chineseCal_str = @"端午节";
+    } else if ([m_str isEqualToString:@"七月"] && [d_str isEqualToString:@"初七"]) {
+        chineseCal_str = @"七夕";
+    } else if ([m_str isEqualToString:@"七月"] && [d_str isEqualToString:@"十五"]) {
+        chineseCal_str = @"中元节";
     } else if ([m_str isEqualToString:@"八月"] && [d_str isEqualToString:@"十五"]) {
         chineseCal_str = @"中秋节";
     } else if ([m_str isEqualToString:@"九月"] && [d_str isEqualToString:@"初九"]) {
@@ -288,18 +287,20 @@
     
     // 公历节日
     NSDictionary * Holidays = @{@"01-01":@"元旦",
-                               @"02-14":@"情人节",
-                               @"03-08":@"妇女节",
-                               @"03-12":@"植树节",
-                               @"05-01":@"劳动节",
-                               @"05-04":@"青年节",
-                               @"06-01":@"儿童节",
-                               @"07-01":@"建党节",
-                               @"08-01":@"建军节",
-                               @"09-10":@"教师节",
-                               @"10-01":@"国庆节",
-                               @"12-24":@"平安夜",
-                               @"12-25":@"圣诞节"};
+                                @"02-14":@"情人节",
+                                @"03-08":@"妇女节",
+                                @"03-12":@"植树节",
+                                @"04-01":@"愚人节",
+                                @"03-21":@"复活节",
+                                @"05-01":@"劳动节",
+                                @"05-04":@"青年节",
+                                @"06-01":@"儿童节",
+                                @"07-01":@"建党节",
+                                @"08-01":@"建军节",
+                                @"09-10":@"教师节",
+                                @"10-01":@"国庆节",
+                                @"12-24":@"平安夜",
+                                @"12-25":@"圣诞节"};
     
     NSDateFormatter * dateFormatt= [[NSDateFormatter alloc] init];
     dateFormatt.dateFormat = @"MM-dd";
@@ -309,6 +310,35 @@
     if([array containsObject:nowStr]) {
         chineseCal_str = [Holidays objectForKey:nowStr];
     }
+    
+    // 公历礼拜节日
+    NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents * comps = [[NSDateComponents alloc] init];
+    NSInteger unit = NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitMonth | NSCalendarUnitYear;
+    comps = [calendar components:unit fromDate:date];
+    NSUInteger month = [comps month];
+    switch (month) {
+        case 5:
+            if (self.todayInMonth == 14) {
+                chineseCal_str = @"母亲节";
+            }
+            break;
+        case 6:
+            if (self.todayInMonth == 21) {
+                chineseCal_str = @"父亲节";
+            }
+            break;
+        case 11:
+            if (self.todayInMonth == 26) {
+                chineseCal_str = @"感恩节";
+            }
+            break;
+
+            
+        default:
+            break;
+    }
+    
     
     // 二十四节气
     for (NSUInteger s = 0; s < 24; s ++) {
