@@ -10,9 +10,7 @@
 #import "SKConstant.h"
 
 @interface SKCalendarManage ()
-@property (assign, nonatomic) NSUInteger days;// 本月天数
 @property (assign, nonatomic) NSUInteger dayInWeek;// 本月第一天是周几
-@property (assign, nonatomic) NSUInteger year;// 年
 
 @end
 

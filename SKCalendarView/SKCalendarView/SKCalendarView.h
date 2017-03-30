@@ -32,6 +32,9 @@
 @property (nonatomic, assign) BOOL enableClickEffect;// 开启点击效果
 @property (nonatomic, assign) BOOL enableDateRoundCorner;// 开启日期圆角
 @property (nonatomic, weak) id <SKCalendarViewDelegate> delegate;
-
+@property (nonatomic, assign) NSUInteger lastMonth;// 上个月
+@property (nonatomic, assign) NSUInteger nextMonth;// 下个月
+@property (nonatomic, assign) BOOL checkLastMonth;// 查看上个月
+@property (nonatomic, assign) BOOL checkNextMonth;// 查看下个月
 
 @end

@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UICollectionView * calendarCollectionView;
 @property (nonatomic, strong) SKCalendarManage * calendarManage;
 @property (nonatomic, strong) UILabel * monthBackgroundLabel;
+@property (nonatomic, strong) NSDate * theDate;// 当前日期
 
 @end
 
@@ -40,9 +41,28 @@
         _calendarManage = [SKCalendarManage manage];
         // 设置初始化日期，默认查看今天所处月份日历
         [_calendarManage checkThisMonthRecordFromToday:[NSDate date]];
+        self.theDate = [NSDate date];
         self.monthBackgroundLabel.text = [NSString stringWithFormat:@"%@", @(_calendarManage.month)];
+//        self.lastMonth = _calendarManage.month - 1;
+//        self.nextMonth = _calendarManage.month + 1;
     }
     return _calendarManage;
+}
+
+- (NSUInteger)lastMonth
+{
+    if (_lastMonth == 0) {
+        _lastMonth = self.calendarManage.month - 1;
+    }
+    return _lastMonth;
+}
+
+- (NSUInteger)nextMonth
+{
+    if (_nextMonth == 0) {
+        _nextMonth = self.calendarManage.month + 1;
+    }
+    return _nextMonth;
 }
 
 #pragma mark - 创建界面
@@ -163,6 +183,31 @@
 - (void)setEnableDateRoundCorner:(BOOL)enableDateRoundCorner
 {
     _enableDateRoundCorner = enableDateRoundCorner;
+}
+
+- (void)setCheckLastMonth:(BOOL)checkLastMonth
+{
+    _checkLastMonth = checkLastMonth;
+    if (checkLastMonth == YES) {
+        NSInteger hours = self.calendarManage.days * -24;
+        NSDate * date = [NSDate dateWithTimeInterval:hours * 60 * 60 sinceDate:self.theDate];
+        [self.calendarManage checkThisMonthRecordFromToday:date];
+        self.theDate = date;
+        [self.calendarCollectionView reloadData];
+    }
+}
+
+- (void)setCheckNextMonth:(BOOL)checkNextMonth
+{
+    _checkNextMonth = checkNextMonth;
+    if (checkNextMonth == YES) {
+        NSUInteger day = self.calendarManage.todayInMonth - self.calendarManage.days;
+        NSInteger hours = (day + 1) * 24;
+        NSDate * date = [NSDate dateWithTimeInterval:hours * 60 * 60 sinceDate:self.theDate];
+        [self.calendarManage checkThisMonthRecordFromToday:date];
+        self.theDate = date;
+        [self.calendarCollectionView reloadData];
+    }
 }
 
 
