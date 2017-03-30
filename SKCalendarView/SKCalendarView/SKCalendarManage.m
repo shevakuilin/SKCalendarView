@@ -257,6 +257,7 @@
     NSString * d_str = [chineseDays objectAtIndex:localeComp.day - 1];
 
     NSString * chineseCal_str = d_str;
+    
     // 农历节日
     if([chineseMonths containsObject:m_str] && [d_str isEqualToString:@"初一"]) {
         chineseCal_str = m_str;
@@ -291,7 +292,6 @@
                                 @"03-08":@"妇女节",
                                 @"03-12":@"植树节",
                                 @"04-01":@"愚人节",
-                                @"03-21":@"复活节",
                                 @"05-01":@"劳动节",
                                 @"05-04":@"青年节",
                                 @"06-01":@"儿童节",
@@ -302,9 +302,30 @@
                                 @"12-24":@"平安夜",
                                 @"12-25":@"圣诞节"};
     
+    
+    
     NSDateFormatter * dateFormatt= [[NSDateFormatter alloc] init];
     dateFormatt.dateFormat = @"MM-dd";
     NSString * nowStr = [dateFormatt stringFromDate:date];
+    // 复活节, Meeus/Jones/Butcher算法
+    NSUInteger a = self.year % 19;
+    NSUInteger b = self.year / 100;
+    NSInteger c = self.year % 100;
+    NSUInteger d = b / 4;
+    NSUInteger e = b % 4;
+    NSUInteger f = (b + 8) / 25;
+    NSUInteger g = (b - f + 1) / 3;
+    NSUInteger h = (19 * a + b - d - g + 15) % 30;
+    NSUInteger i = c / 4;
+    NSUInteger k = c % 4;
+    NSUInteger l = (32 + (2 * e) + (2 * i) - h - k) % 7;
+    NSUInteger m = (a + (11 * h) + (22 * l)) / 451;
+    NSUInteger theMonth = (h + l - (7 * m) + 114) / 31;
+    NSInteger day = ((h + l - (7 * m) + 114) % 31)+ 1;
+    NSString * easter = [NSString stringWithFormat:@"0%@-%@", @(theMonth), @(day)];
+    if ([easter isEqualToString:nowStr]) {
+        chineseCal_str = @"复活节";
+    }
     
     NSArray * array = [Holidays allKeys];
     if([array containsObject:nowStr]) {
