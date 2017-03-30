@@ -17,7 +17,8 @@
 @property (nonatomic, strong) UIImage * dateBackgroundIcon;// 日期背景图片
 @property (nonatomic, strong) NSString * calendarTitle;// 日期标题
 @property (nonatomic, strong) UIColor * calendarTitleColor;// 日期标题字体颜色
-@property (nonatomic, assign) BOOL enableClickEffect;// 开启点击效果
-@property (nonatomic, assign) BOOL enableDateRoundCorner;// 开启日期圆角
+@property (nonatomic, assign) BOOL enableClickEffect;// 开启点击效果, 默认YES
+@property (nonatomic, assign) BOOL enableDateRoundCorner;// 开启日期圆角, 默认YES
+@property (nonatomic, assign) BOOL enableLine;// 开启边线, 默认YES
 
 @end

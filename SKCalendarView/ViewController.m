@@ -36,6 +36,11 @@
         _calendarView.layer.cornerRadius = 5;
         _calendarView.layer.borderColor = [UIColor blackColor].CGColor;
         _calendarView.layer.borderWidth = 0.5;
+//        _calendarView.weekBackgroundColor = [UIColor colorWithRed:123 / 255.0 green:133 / 255.0 blue:255 / 255.0 alpha:1.0];
+        _calendarView.calendarTodayTitleColor = [UIColor redColor];
+        _calendarView.calendarTodayTitle = @"今日";
+        _calendarView.dateColor = [UIColor orangeColor];
+        _calendarView.calendarTodayColor = [UIColor whiteColor];
     }
     
     return _calendarView;

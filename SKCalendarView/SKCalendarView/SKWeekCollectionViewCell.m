@@ -11,6 +11,7 @@
 
 @interface SKWeekCollectionViewCell ()
 @property (nonatomic, strong) UILabel * weekLabel;
+@property (nonatomic, strong) UIImageView * bottomLine;
 
 @end;
 
@@ -21,6 +22,7 @@
     if ([super initWithFrame:frame]) {
         if (self) {
             [self customView];
+            self.enableLine = YES;
         }
     }
     
@@ -37,19 +39,52 @@
     [self.weekLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self);
     }];
+    
+    self.bottomLine = [UIImageView new];
+    [self addSubview:self.bottomLine];
+    self.bottomLine.backgroundColor = [UIColor lightGrayColor];
+    [self.bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self);
+        make.right.equalTo(self);
+        make.bottom.equalTo(self).with.offset(-3);
+        
+        make.height.mas_offset(0.5);
+    }];
 }
 
 #pragma mark - 外部配置
 - (void)setWeek:(NSString *)week
 {
     _week = week;
-    self.weekLabel.text = week;
+    if (!isEmpty(week)) {
+        self.weekLabel.text = week;
+    }
 }
 
 - (void)setWeekColor:(UIColor *)weekColor
 {
     _weekColor = weekColor;
-    self.weekLabel.textColor = weekColor;
+    if (!isEmpty(weekColor)) {
+        self.weekLabel.textColor = weekColor;
+    }
+}
+
+- (void)setWeekBackgroundColor:(UIColor *)weekBackgroundColor
+{
+    _weekBackgroundColor = weekBackgroundColor;
+    if (!isEmpty(weekBackgroundColor)) {
+        self.backgroundColor = weekBackgroundColor;
+    }
+}
+
+- (void)setEnableLine:(BOOL)enableLine
+{
+    _enableLine = enableLine;
+    if (enableLine == YES) {
+        self.bottomLine.hidden = NO;
+    } else {
+        self.bottomLine.hidden = YES;
+    }
 }
 
 @end

@@ -15,6 +15,8 @@
 @property (nonatomic, strong) UIImageView * icon;// 日期图片
 @property (nonatomic, strong) UILabel * dateLabel;// 日期
 @property (nonatomic, strong) UILabel * titleLabel;// 日期标题
+@property (nonatomic, strong) UIImageView * rightLine;// 右边线
+@property (nonatomic, strong) UIImageView * bottomLine;// 下边线
 
 @end
 
@@ -25,6 +27,9 @@
     if ([super initWithFrame:frame]) {
         if (self) {
             [self customView];
+            self.enableLine = YES;
+            self.enableClickEffect = YES;
+            self.enableDateRoundCorner = YES;
         }
     }
     
@@ -54,7 +59,7 @@
     [self.baseView addSubview:self.icon];
     [self.icon mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.baseView);
-        make.top.equalTo(self.baseView);
+        make.top.equalTo(self.baseView).with.offset(3);
         
         make.size.mas_offset(CGSizeMake(25, 25));
     }];
@@ -76,10 +81,34 @@
     self.titleLabel.font = [UIFont systemFontOfSize:10];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.icon.mas_bottom).with.offset(2);
-        make.bottom.equalTo(self.baseView);
+//        make.top.equalTo(self.icon.mas_bottom).with.offset(2);
+        make.bottom.equalTo(self.baseView).with.offset(-2);
         make.left.equalTo(self.baseView);
         make.right.equalTo(self.baseView);
+    }];
+    
+    
+    // 边线
+    self.rightLine = [UIImageView new];
+    [self addSubview:self.rightLine];
+    self.rightLine.backgroundColor = [UIColor lightGrayColor];
+    [self.rightLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self);
+        make.right.equalTo(self);
+        make.bottom.equalTo(self);
+        
+        make.width.mas_offset(0.5);
+    }];
+    
+    self.bottomLine = [UIImageView new];
+    [self addSubview:self.bottomLine];
+    self.bottomLine.backgroundColor = [UIColor lightGrayColor];
+    [self.bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self);
+        make.right.equalTo(self);
+        make.bottom.equalTo(self);
+        
+        make.height.mas_offset(0.5);
     }];
 }
 
@@ -161,8 +190,25 @@
 {
     _enableDateRoundCorner = enableDateRoundCorner;
     if (enableDateRoundCorner == YES) {// 开启圆角
-        SKArchCutter * archCutter = [[SKArchCutter alloc] init];
-        [archCutter cuttingWithObject:self.icon direction:UIRectCornerAllCorners cornerRadii:10];
+//        SKArchCutter * archCutter = [[SKArchCutter alloc] init];
+//        [archCutter cuttingWithObject:self.icon direction:UIRectCornerAllCorners cornerRadii:10];
+        UIBezierPath * maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 25, 25) byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(10, 10)];
+        CAShapeLayer * maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = CGRectMake(0, 0, 25, 25);
+        maskLayer.path = maskPath.CGPath;
+        self.icon.layer.mask = maskLayer;
+    }
+}
+
+- (void)setEnableLine:(BOOL)enableLine
+{
+    _enableLine = enableLine;
+    if (enableLine == YES) {
+        self.rightLine.hidden = NO;
+        self.bottomLine.hidden = NO;
+    } else {
+        self.rightLine.hidden = YES;
+        self.bottomLine.hidden = YES;
     }
 }
 
