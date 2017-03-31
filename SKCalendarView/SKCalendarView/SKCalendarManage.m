@@ -10,7 +10,6 @@
 #import "SKConstant.h"
 
 @interface SKCalendarManage ()
-@property (assign, nonatomic) NSUInteger theMonth;// 本月
 
 @end
 
@@ -22,11 +21,7 @@
     static dispatch_once_t onceCalendar;
     dispatch_once(&onceCalendar, ^{
         manageSinglenton = [[self alloc] init];
-        [manageSinglenton calculationThisMonthDays:nil];
-        [manageSinglenton calculationThisMonthFirstDayInWeek:nil];
-        [manageSinglenton creatcalendarArrayWithDate:nil];
         [manageSinglenton getWeekString];
-        [manageSinglenton calculationChinaCalendarWithDate:nil];
     });
     
     return manageSinglenton;
@@ -78,7 +73,7 @@
     self.dayInWeek = [comps weekday];// 是周几
     self.year = [comps year];
     self.month = [comps month];
-    [self calculationChinaCalendarWithDate:date];// 计算农历日期
+
     [self creatcalendarArrayWithDate:date];
 }
 
@@ -93,13 +88,13 @@
     }
     // 向前推算日期到本月第一天
     NSDate * firstDay = date;
-    if (self.theMonth == self.month) {// 如果所查看月份是本月
-        if (self.todayInMonth > 1) {
-            self.todayInMonth = self.todayInMonth + self.dayInWeek - 2;// 计算在本月日历上所处的位置
-        }
-    } else {
-        self.todayInMonth = -1;
+    if (self.todayInMonth > 1) {
+        self.todayInMonth = self.todayInMonth + self.dayInWeek - 2;// 计算在本月日历上所处的位置
     }
+//    if (self.theMonth == self.month) {// 如果所查看月份是本月
+//    } else {
+//        self.todayInMonth = -1;
+//    }
     switch (self.dayInWeek) {// 根据本月第一天是周几，来确定之后的日期替换空占位
         case 1:// 周日
             for (NSInteger i = 1; i <= self.days; i ++) {
@@ -309,7 +304,7 @@
                                 @"12-25":@"圣诞节"};
     
     NSDateFormatter * dateFormatt= [[NSDateFormatter alloc] init];
-    dateFormatt.dateFormat = @"MM-dd";
+    [dateFormatt setDateFormat:@"MM-dd"];
     NSString * nowStr = [dateFormatt stringFromDate:date];
     // 复活节, Meeus/Jones/Butcher算法
     NSUInteger a = self.year % 19;
@@ -366,130 +361,210 @@
     }
     
     // 二十四节气
-    for (NSUInteger s = 0; s < 24; s ++) {
-        NSString * solarTerms = [self calculationSolarTermsWithYear:self.year solarTermsIndex:s];
-        switch (s) {// 根据节气索引来判断节气
-            case 0:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"小寒";
+    NSString * solarTerms = @"";
+    switch (self.month) {// 过滤月份
+        case 1:
+            for (NSInteger i = 0; i < 2; i ++) {
+                solarTerms = [self calculationSolarTermsWithYear:self.year solarTermsIndex:i];
+                switch (i) {
+                    case 0:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"小寒";
+                        }
+                        break;
+                    case 1:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"大寒";
+                        }
+                        break;
                 }
-                break;
-            case 1:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"大寒";
+            }
+            break;
+        case 2:
+            for (NSInteger i = 2; i < 4; i ++) {
+                solarTerms = [self calculationSolarTermsWithYear:self.year solarTermsIndex:i];
+                switch (i) {
+                    case 2:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"立春";
+                        }
+                        break;
+                    case 3:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"雨水";
+                        }
+                        break;
                 }
-                break;
-            case 2:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"立春";
+            }
+            break;
+        case 3:
+            for (NSInteger i = 4; i < 6; i ++) {
+                solarTerms = [self calculationSolarTermsWithYear:self.year solarTermsIndex:i];
+                switch (i) {
+                    case 4:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"惊蛰";
+                        }
+                        break;
+                    case 5:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"春分";
+                        }
+                        break;
                 }
-                break;
-            case 3:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"雨水";
+            }
+            break;
+        case 4:
+            for (NSInteger i = 6; i < 8; i ++) {
+                solarTerms = [self calculationSolarTermsWithYear:self.year solarTermsIndex:i];
+                switch (i) {
+                    case 6:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"清明";
+                        }
+                        break;
+                    case 7:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"谷雨";
+                        }
+                        break;
                 }
-                break;
-            case 4:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"惊蛰";
+            }
+            break;
+        case 5:
+            for (NSInteger i = 8; i < 10; i ++) {
+                solarTerms = [self calculationSolarTermsWithYear:self.year solarTermsIndex:i];
+                switch (i) {
+                    case 8:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"立夏";
+                        }
+                        break;
+                    case 9:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"小满";
+                        }
+                        break;
                 }
-                break;
-            case 5:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"春分";
+            }
+            break;
+        case 6:
+            for (NSInteger i = 10; i < 12; i ++) {
+                solarTerms = [self calculationSolarTermsWithYear:self.year solarTermsIndex:i];
+                switch (i) {
+                    case 10:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"芒种";
+                        }
+                        break;
+                    case 11:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"夏至";
+                        }
                 }
-                break;
-            case 6:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"清明";
+            }
+            break;
+        case 7:
+            for (NSInteger i = 12; i < 14; i ++) {
+                solarTerms = [self calculationSolarTermsWithYear:self.year solarTermsIndex:i];
+                switch (i) {
+                    case 12:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"小暑";
+                        }
+                        break;
+                    case 13:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"大暑";
+                        }
+                    break;                }
+            }
+            break;
+        case 8:
+            for (NSInteger i = 14; i < 16; i ++) {
+                solarTerms = [self calculationSolarTermsWithYear:self.year solarTermsIndex:i];
+                switch (i) {
+                    case 14:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"立秋";
+                        }
+                        break;
+                    case 15:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"处暑";
+                        }
+                        break;
                 }
-                break;
-            case 7:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"谷雨";
+            }
+            break;
+        case 9:
+            for (NSInteger i = 16; i < 18; i ++) {
+                solarTerms = [self calculationSolarTermsWithYear:self.year solarTermsIndex:i];
+                switch (i) {
+                    case 16:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"白露";
+                        }
+                        break;
+                    case 17:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"秋分";
+                        }
+                        break;
                 }
-                break;
-            case 8:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"立夏";
+            }
+            break;
+        case 10:
+            for (NSInteger i = 18; i < 20; i ++) {
+                solarTerms = [self calculationSolarTermsWithYear:self.year solarTermsIndex:i];
+                switch (i) {
+                    case 18:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"寒露";
+                        }
+                        break;
+                    case 19:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"霜降";
+                        }
+                        break;
                 }
-                break;
-            case 9:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"小满";
+            }
+            break;
+        case 11:
+            for (NSInteger i = 20; i < 22; i ++) {
+                solarTerms = [self calculationSolarTermsWithYear:self.year solarTermsIndex:i];
+                switch (i) {
+                    case 20:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"立冬";
+                        }
+                        break;
+                    case 21:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"小雪";
+                        }
+                    break;
                 }
-                break;
-            case 10:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"芒种";
+            }
+            break;
+        case 12:
+            for (NSInteger i = 22; i < 24; i ++) {
+                solarTerms = [self calculationSolarTermsWithYear:self.year solarTermsIndex:i];
+                switch (i) {
+                    case 22:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"大雪";
+                        }
+                        break;
+                    case 23:
+                        if ([solarTerms isEqualToString:nowStr]) {
+                            chineseCal_str = @"冬至";
+                        }
+                        break;
                 }
-                break;
-            case 11:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"夏至";
-                }
-                break;
-            case 12:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"小暑";
-                }
-                break;
-            case 13:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"大暑";
-                }
-                break;
-            case 14:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"立秋";
-                }
-                break;
-            case 15:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"处暑";
-                }
-                break;
-            case 16:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"白露";
-                }
-                break;
-            case 17:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"秋分";
-                }
-                break;
-            case 18:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"寒露";
-                }
-                break;
-            case 19:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"霜降";
-                }
-                break;
-            case 20:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"立冬";
-                }
-                break;
-            case 21:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"小雪";
-                }
-                break;
-            case 22:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"大雪";
-                }
-                break;
-            case 23:
-                if ([solarTerms isEqualToString:nowStr]) {
-                    chineseCal_str = @"冬至";
-                }
-                break;
-        }
+            }
+            break;
     }
     
     return chineseCal_str;

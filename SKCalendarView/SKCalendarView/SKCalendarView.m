@@ -18,6 +18,7 @@
 @property (nonatomic, strong) SKCalendarManage * calendarManage;
 @property (nonatomic, strong) UILabel * monthBackgroundLabel;
 @property (nonatomic, strong) NSDate * theDate;// 当前日期
+@property (nonatomic, assign) NSUInteger theDayInMonth;// 今天在本月所处位置
 
 @end
 
@@ -43,6 +44,7 @@
         [_calendarManage checkThisMonthRecordFromToday:[NSDate date]];
         self.theDate = [NSDate date];
         self.monthBackgroundLabel.text = [NSString stringWithFormat:@"%@", @(_calendarManage.month)];
+        self.theDayInMonth = _calendarManage.todayInMonth;
     }
     return _calendarManage;
 }
@@ -187,7 +189,7 @@
 {
     _checkLastMonth = checkLastMonth;
     if (checkLastMonth == YES) {
-        NSInteger hours = self.calendarManage.days * -24;
+        NSInteger hours = (self.calendarManage.days - 1) * -24;
         NSDate * date = [NSDate dateWithTimeInterval:hours * 60 * 60 sinceDate:self.theDate];
         [self.calendarManage checkThisMonthRecordFromToday:date];
         self.theDate = date;
@@ -252,7 +254,7 @@
         } else {
             cell.calendarDateColor = [UIColor blackColor];
         }
-        if (self.calendarManage.todayInMonth == indexPath.row) {// 是否属于今天
+        if (self.theDayInMonth == indexPath.row && self.calendarManage.month == self.calendarManage.theMonth) {// 是否属于今天
             cell.calendarDate = getNoneNil(self.calendarManage.calendarDate[indexPath.row]);// 公历日期
             cell.calendarTitle = getNoneNil(self.calendarManage.chineseCalendarDate[indexPath.row]);// 农历日期
             cell.calendarDateColor = self.calendarTodayColor;
