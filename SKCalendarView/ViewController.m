@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "SKConstant.h"
 #import "SKCalendarView.h"
+#import "SKCalendarAnimationManage.h"
 
 @interface ViewController ()
 @property (nonatomic, strong) SKCalendarView * calendarView;
@@ -25,6 +26,7 @@
     [super viewDidLoad];
     [self.view addSubview:self.calendarView];
     
+    // 查看下个月
     self.nextButton = [UIButton new];
     [self.view addSubview:self.nextButton];
     [self.nextButton setTitle:[NSString stringWithFormat:@"%@月", @(self.nextMonth)] forState:UIControlStateNormal];
@@ -35,6 +37,7 @@
     }];
     [self.nextButton addTarget:self action:@selector(checkNextMonthCalendar) forControlEvents:UIControlEventTouchUpInside];
     
+    // 查看上个月
     self.lastButton = [UIButton new];
     [self.view addSubview:self.lastButton];
     [self.lastButton setTitle:[NSString stringWithFormat:@"%@月", @(self.lastMonth)] forState:UIControlStateNormal];
@@ -52,7 +55,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+#pragma mark - 日历设置
 - (SKCalendarView *)calendarView
 {
     if (!_calendarView) {
@@ -60,12 +63,12 @@
         _calendarView.layer.cornerRadius = 5;
         _calendarView.layer.borderColor = [UIColor blackColor].CGColor;
         _calendarView.layer.borderWidth = 0.5;
-        _calendarView.calendarTodayTitleColor = [UIColor redColor];
-        _calendarView.calendarTodayTitle = @"今日";
-        _calendarView.dateColor = [UIColor orangeColor];
-        _calendarView.calendarTodayColor = [UIColor whiteColor];
-        self.lastMonth = _calendarView.lastMonth;
-        self.nextMonth = _calendarView.nextMonth;
+        _calendarView.calendarTodayTitleColor = [UIColor redColor];// 今天标题字体颜色
+        _calendarView.calendarTodayTitle = @"今日";// 今天下标题
+        _calendarView.dateColor = [UIColor orangeColor];// 今天日期数字背景颜色
+        _calendarView.calendarTodayColor = [UIColor whiteColor];// 今天日期字体颜色
+        self.lastMonth = _calendarView.lastMonth;// 获取上个月的月份
+        self.nextMonth = _calendarView.nextMonth;// 获取下个月的月份
     }
     
     return _calendarView;
@@ -76,14 +79,17 @@
 {
     self.calendarView.checkNextMonth = YES;// 查看下月
     [self changeButton:self.nextButton isNext:YES];
+    [SKCalendarAnimationManage animationWithView:self.calendarView andEffect:SK_ANIMATION_REVEAL isNext:YES];
 }
 
 - (void)checkLastMonthCalendar
 {
     self.calendarView.checkLastMonth = YES;// 查看上月
     [self changeButton:self.lastButton isNext:NO];
+    [SKCalendarAnimationManage animationWithView:self.calendarView andEffect:SK_ANIMATION_REVEAL isNext:NO];
 }
 
+// 改变上/下月按钮的月份
 - (void)changeButton:(UIButton *)button isNext:(BOOL)next
 {
     if (next == YES) {

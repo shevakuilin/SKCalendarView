@@ -19,6 +19,7 @@
 @property (nonatomic, strong) UILabel * monthBackgroundLabel;
 @property (nonatomic, strong) NSDate * theDate;// 当前日期
 @property (nonatomic, assign) NSUInteger theDayInMonth;// 今天在本月所处位置
+@property (nonatomic, assign) NSInteger selectedRow;// 选择的日期
 
 @end
 
@@ -63,6 +64,15 @@
         _nextMonth = self.calendarManage.month + 1;
     }
     return _nextMonth;
+}
+
+- (NSInteger)selectedRow
+{
+    if (_selectedRow == 0) {
+        _selectedRow = - 1;
+    }
+    
+    return _selectedRow;
 }
 
 #pragma mark - 创建界面
@@ -254,6 +264,13 @@
         } else {
             cell.calendarDateColor = [UIColor blackColor];
         }
+        if (self.selectedRow == indexPath.row) {// 如果是选中的日期
+            cell.enableClickEffect = YES;
+            cell.dateColor = [UIColor colorWithRed:204 / 255.0 green:228 / 255.0 blue:236 / 255.0 alpha:1.0];
+        } else {
+            cell.enableClickEffect = NO;
+            cell.dateColor = nil;
+        }
         if (self.theDayInMonth == indexPath.row && self.calendarManage.month == self.calendarManage.theMonth) {// 是否属于今天
             cell.calendarDate = getNoneNil(self.calendarManage.calendarDate[indexPath.row]);// 公历日期
             cell.calendarTitle = getNoneNil(self.calendarManage.chineseCalendarDate[indexPath.row]);// 农历日期
@@ -265,7 +282,8 @@
         } else {
             cell.calendarDate = getNoneNil(self.calendarManage.calendarDate[indexPath.row]);// 公历日期
             cell.calendarTitle = getNoneNil(self.calendarManage.chineseCalendarDate[indexPath.row]);// 农历日期
-            cell.dateColor = nil;
+//            cell.dateColor = nil;
+            cell.calendarTitleColor = nil;
         }
         
         return cell;
@@ -289,6 +307,8 @@
     if ([self.delegate respondsToSelector:@selector(selectDateWithRow:)]) {
         [self.delegate selectDateWithRow:indexPath.row];
     }
+    self.selectedRow = indexPath.row;
+    [self.calendarCollectionView reloadData];
 }
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath

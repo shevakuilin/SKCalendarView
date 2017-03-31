@@ -8,6 +8,7 @@
 
 #import "SKCalendarCollectionViewCell.h"
 #import "SKConstant.h"
+#import "SKCalendarAnimationManage.h"
 
 @interface SKCalendarCollectionViewCell ()
 @property (nonatomic, strong) UIView * baseView;// 底部view
@@ -28,7 +29,6 @@
         if (self) {
             [self customView];
             self.enableLine = YES;
-            self.enableClickEffect = YES;
             self.enableDateRoundCorner = YES;
         }
     }
@@ -122,19 +122,13 @@
 - (void)setCalendarDateColor:(UIColor *)calendarDateColor
 {
     _calendarDateColor = calendarDateColor;
-    if (!isEmpty(calendarDateColor)) {
-        self.dateLabel.textColor = calendarDateColor;
-    }
+    self.dateLabel.textColor = calendarDateColor;
 }
 
 - (void)setDateColor:(UIColor *)dateColor
 {
     _dateColor = dateColor;
-    if (!isEmpty(dateColor)) {
-        self.icon.backgroundColor = dateColor;
-    } else {
-        self.icon.backgroundColor = nil;
-    }
+    self.icon.backgroundColor = dateColor;
 }
 
 - (void)setDateIcon:(UIImage *)dateIcon
@@ -171,16 +165,14 @@
 - (void)setCalendarTitleColor:(UIColor *)calendarTitleColor
 {
     _calendarTitleColor = calendarTitleColor;
-    if (!isEmpty(calendarTitleColor)) {
-        self.titleLabel.textColor = calendarTitleColor;
-    }
+    self.titleLabel.textColor = calendarTitleColor;
 }
 
 - (void)setEnableClickEffect:(BOOL)enableClickEffect
 {
     _enableClickEffect = enableClickEffect;
     if (enableClickEffect == YES) {// 开启点击效果
-        
+        [SKCalendarAnimationManage clickEffectAnimationForView:self.baseView];
     }
 }
 
@@ -188,8 +180,6 @@
 {
     _enableDateRoundCorner = enableDateRoundCorner;
     if (enableDateRoundCorner == YES) {// 开启圆角
-//        SKArchCutter * archCutter = [[SKArchCutter alloc] init];
-//        [archCutter cuttingWithObject:self.icon direction:UIRectCornerAllCorners cornerRadii:10];
         UIBezierPath * maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 25, 25) byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(10, 10)];
         CAShapeLayer * maskLayer = [[CAShapeLayer alloc] init];
         maskLayer.frame = CGRectMake(0, 0, 25, 25);
