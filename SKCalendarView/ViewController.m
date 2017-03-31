@@ -31,7 +31,7 @@
         make.bottom.equalTo(self.calendarView.mas_bottom);
         make.right.equalTo(self.calendarView.mas_right).with.offset(-10);
     }];
-    [self.nextButton addTarget:self action:@selector(checkNextMonth) forControlEvents:UIControlEventTouchUpInside];
+    [self.nextButton addTarget:self action:@selector(checkNextMonthCalendar) forControlEvents:UIControlEventTouchUpInside];
     
     self.lastButton = [UIButton new];
     [self.calendarView addSubview:self.lastButton];
@@ -41,7 +41,7 @@
         make.bottom.equalTo(self.calendarView.mas_bottom);
         make.left.equalTo(self.calendarView.mas_left).with.offset(10);
     }];
-    [self.lastButton addTarget:self action:@selector(checkLastMonth) forControlEvents:UIControlEventTouchUpInside];
+    [self.lastButton addTarget:self action:@selector(checkLastMonthCalendar) forControlEvents:UIControlEventTouchUpInside];
 }
 
 

@@ -116,9 +116,7 @@
 - (void)setCalendarDate:(NSString *)calendarDate
 {
     _calendarDate = calendarDate;
-    if (!isEmpty(calendarDate)) {
-        self.dateLabel.text = calendarDate;
-    }
+    self.dateLabel.text = getNoneNil(calendarDate);
 }
 
 - (void)setCalendarDateColor:(UIColor *)calendarDateColor
@@ -134,6 +132,8 @@
     _dateColor = dateColor;
     if (!isEmpty(dateColor)) {
         self.icon.backgroundColor = dateColor;
+    } else {
+        self.icon.backgroundColor = nil;
     }
 }
 
@@ -164,10 +164,8 @@
 
 - (void)setCalendarTitle:(NSString *)calendarTitle
 {
-    _calendarTitle = calendarTitle;
-    if (!isEmpty(calendarTitle)) {
-        self.titleLabel.text = calendarTitle;
-    }
+    self.titleLabel.text = calendarTitle;
+    _calendarTitle = getNoneNil(calendarTitle);
 }
 
 - (void)setCalendarTitleColor:(UIColor *)calendarTitleColor

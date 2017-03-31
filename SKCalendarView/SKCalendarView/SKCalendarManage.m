@@ -10,7 +10,7 @@
 #import "SKConstant.h"
 
 @interface SKCalendarManage ()
-@property (assign, nonatomic) NSUInteger dayInWeek;// 本月第一天是周几
+@property (assign, nonatomic) NSUInteger theMonth;// 本月
 
 @end
 
@@ -24,7 +24,7 @@
         manageSinglenton = [[self alloc] init];
         [manageSinglenton calculationThisMonthDays:nil];
         [manageSinglenton calculationThisMonthFirstDayInWeek:nil];
-        [manageSinglenton creatcalendarArray];
+        [manageSinglenton creatcalendarArrayWithDate:nil];
         [manageSinglenton getWeekString];
         [manageSinglenton calculationChinaCalendarWithDate:nil];
     });
@@ -41,8 +41,6 @@
     
     [self calculationThisMonthDays:today];
     [self calculationThisMonthFirstDayInWeek:today];
-    [self calculationChinaCalendarWithDate:today];
-    [self creatcalendarArray];
 }
 
 #pragma mark - 计算本月天数
@@ -64,8 +62,11 @@
     }
     NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents * comps = [[NSDateComponents alloc] init];
+    NSDateComponents * theComps = [[NSDateComponents alloc] init];
     NSInteger unitFlags = NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitMonth | NSCalendarUnitYear;
     comps = [calendar components:unitFlags fromDate:date];
+    theComps = [calendar components:unitFlags fromDate:[NSDate date]];
+    self.theMonth = [theComps month];// 本月的月份
     NSUInteger day = [comps day];// 是本月第几天
     self.todayInMonth = day;
     if (day > 1) {// 如果不是本月第一天
@@ -73,15 +74,16 @@
         NSInteger hours = (day - 1) * -24;
         date = [NSDate dateWithTimeInterval:hours * 60 * 60 sinceDate:date];
     }
-    
     comps = [calendar components:unitFlags fromDate:date];
     self.dayInWeek = [comps weekday];// 是周几
     self.year = [comps year];
     self.month = [comps month];
+    [self calculationChinaCalendarWithDate:date];// 计算农历日期
+    [self creatcalendarArrayWithDate:date];
 }
 
 #pragma mark - 创建日历数组
-- (void)creatcalendarArray
+- (void)creatcalendarArrayWithDate:(NSDate *)date
 {
     self.calendarDate = [NSMutableArray new];
     self.chineseCalendarDate = [NSMutableArray new];
@@ -90,10 +92,13 @@
         [self.chineseCalendarDate addObject:@""];
     }
     // 向前推算日期到本月第一天
-    NSInteger hours = (self.todayInMonth - 1) * -24;
-    NSDate * firstDay = [NSDate dateWithTimeInterval:hours * 60 * 60 sinceDate:[NSDate date]];
-    if (self.todayInMonth > 1) {
-        self.todayInMonth = self.todayInMonth + self.dayInWeek - 2;// 计算在本月日历上所处的位置
+    NSDate * firstDay = date;
+    if (self.theMonth == self.month) {// 如果所查看月份是本月
+        if (self.todayInMonth > 1) {
+            self.todayInMonth = self.todayInMonth + self.dayInWeek - 2;// 计算在本月日历上所处的位置
+        }
+    } else {
+        self.todayInMonth = -1;
     }
     switch (self.dayInWeek) {// 根据本月第一天是周几，来确定之后的日期替换空占位
         case 1:// 周日
@@ -242,6 +247,7 @@
     if (isEmpty(date)) {
         return nil;
     }
+    NSArray * chineseYears = @[@"甲子", @"乙丑", @"丙寅", @"丁卯", @"戊辰", @"己巳", @"庚午", @"辛未", @"壬申", @"癸酉", @"甲戌", @"乙亥", @"丙子", @"丁丑", @"戊寅", @"己卯", @"庚辰", @"辛己", @"壬午", @"癸未", @"甲申", @"乙酉", @"丙戌", @"丁亥", @"戊子", @"己丑", @"庚寅", @"辛卯", @"壬辰", @"癸巳", @"甲午", @"乙未", @"丙申", @"丁酉", @"戊戌", @"己亥", @"庚子", @"辛丑", @"壬寅", @"癸丑", @"甲辰", @"乙巳", @"丙午", @"丁未", @"戊申", @"己酉", @"庚戌", @"辛亥", @"壬子", @"癸丑", @"甲寅", @"乙卯", @"丙辰", @"丁巳", @"戊午", @"己未", @"庚申", @"辛酉", @"壬戌", @"癸亥"];
     NSArray * chineseMonths = @[@"正月", @"二月", @"三月", @"四月", @"五月", @"六月", @"七月", @"八月",
                                 @"九月", @"十月", @"冬月", @"腊月"];
     NSArray * chineseDays = @[@"初一", @"初二", @"初三", @"初四", @"初五", @"初六", @"初七", @"初八", @"初九", @"初十", @"十一", @"十二", @"十三", @"十四", @"十五", @"十六", @"十七", @"十八", @"十九", @"廿十", @"廿一", @"廿二", @"廿三", @"廿四", @"廿五", @"廿六", @"廿七", @"廿八", @"廿九", @"三十"];
@@ -252,6 +258,7 @@
     
     NSDateComponents * localeComp = [localeCalendar components:unitFlags fromDate:date];
     
+    self.chineseYear = [chineseYears objectAtIndex:localeComp.year - 1];
     NSString * m_str = [chineseMonths objectAtIndex:localeComp.month - 1];
     NSString * d_str = [chineseDays objectAtIndex:localeComp.day - 1];
 
@@ -301,8 +308,6 @@
                                 @"12-24":@"平安夜",
                                 @"12-25":@"圣诞节"};
     
-    
-    
     NSDateFormatter * dateFormatt= [[NSDateFormatter alloc] init];
     dateFormatt.dateFormat = @"MM-dd";
     NSString * nowStr = [dateFormatt stringFromDate:date];
@@ -337,19 +342,20 @@
     NSInteger unit = NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitMonth | NSCalendarUnitYear;
     comps = [calendar components:unit fromDate:date];
     NSUInteger month = [comps month];
+    NSUInteger dayInMonth = [comps day];
     switch (month) {
         case 5:
-            if (self.todayInMonth == 14) {
+            if (dayInMonth == 14) {
                 chineseCal_str = @"母亲节";
             }
             break;
         case 6:
-            if (self.todayInMonth == 21) {
+            if (dayInMonth == 21) {
                 chineseCal_str = @"父亲节";
             }
             break;
         case 11:
-            if (self.todayInMonth == 26) {
+            if (dayInMonth == 26) {
                 chineseCal_str = @"感恩节";
             }
             break;
@@ -358,7 +364,6 @@
         default:
             break;
     }
-    
     
     // 二十四节气
     for (NSUInteger s = 0; s < 24; s ++) {

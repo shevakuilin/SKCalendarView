@@ -19,8 +19,10 @@
 @property (copy, nonatomic) NSArray * weekList;
 @property (assign, nonatomic) BOOL isIncreaseHeight;// 是否增加日历高度
 @property (assign, nonatomic) NSUInteger days;// 本月天数
-@property (assign, nonatomic) NSUInteger todayInMonth;// 今天在本月是第几天
+@property (assign, nonatomic) NSInteger todayInMonth;// 今天在本月是第几天
+@property (assign, nonatomic) NSUInteger dayInWeek;// 本月第一天是周几, 1为周日，以此类推
 @property (assign, nonatomic) NSUInteger year;// 当前年
 @property (assign, nonatomic) NSUInteger month;// 当前月
+@property (strong, nonatomic) NSString * chineseYear;// 农历年
 
 @end

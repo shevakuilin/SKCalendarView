@@ -43,8 +43,6 @@
         [_calendarManage checkThisMonthRecordFromToday:[NSDate date]];
         self.theDate = [NSDate date];
         self.monthBackgroundLabel.text = [NSString stringWithFormat:@"%@", @(_calendarManage.month)];
-//        self.lastMonth = _calendarManage.month - 1;
-//        self.nextMonth = _calendarManage.month + 1;
     }
     return _calendarManage;
 }
@@ -193,6 +191,7 @@
         NSDate * date = [NSDate dateWithTimeInterval:hours * 60 * 60 sinceDate:self.theDate];
         [self.calendarManage checkThisMonthRecordFromToday:date];
         self.theDate = date;
+        self.monthBackgroundLabel.text = [NSString stringWithFormat:@"%@", @(self.calendarManage.month)];
         [self.calendarCollectionView reloadData];
     }
 }
@@ -201,11 +200,16 @@
 {
     _checkNextMonth = checkNextMonth;
     if (checkNextMonth == YES) {
-        NSUInteger day = self.calendarManage.todayInMonth - self.calendarManage.days;
+        NSUInteger todayInMonth = self.calendarManage.todayInMonth;
+        if (todayInMonth > 1) {
+            todayInMonth = self.calendarManage.todayInMonth - self.calendarManage.dayInWeek + 2;
+        }
+        NSUInteger day = self.calendarManage.days - todayInMonth;
         NSInteger hours = (day + 1) * 24;
         NSDate * date = [NSDate dateWithTimeInterval:hours * 60 * 60 sinceDate:self.theDate];
         [self.calendarManage checkThisMonthRecordFromToday:date];
         self.theDate = date;
+        self.monthBackgroundLabel.text = [NSString stringWithFormat:@"%@", @(self.calendarManage.month)];
         [self.calendarCollectionView reloadData];
     }
 }
@@ -243,21 +247,23 @@
 {
     if (collectionView == self.calendarCollectionView) {
         SKCalendarCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Calendar" forIndexPath:indexPath];
-        cell.calendarDate = getNoneNil(self.calendarManage.calendarDate[indexPath.row]);// 公历日期
-        cell.calendarTitle = getNoneNil(self.calendarManage.chineseCalendarDate[indexPath.row]);// 农历日期
         if ((indexPath.row + 1) % 7 == 0 || (indexPath.row + 1) % 7 == 1) {// 是否属于双休日
             cell.calendarDateColor = [UIColor redColor];
         } else {
             cell.calendarDateColor = [UIColor blackColor];
         }
-        if (self.calendarManage.todayInMonth == indexPath.row) {
+        if (self.calendarManage.todayInMonth == indexPath.row) {// 是否属于今天
+            cell.calendarDate = getNoneNil(self.calendarManage.calendarDate[indexPath.row]);// 公历日期
+            cell.calendarTitle = getNoneNil(self.calendarManage.chineseCalendarDate[indexPath.row]);// 农历日期
             cell.calendarDateColor = self.calendarTodayColor;
             cell.calendarTitle = getNoneNil(self.calendarTodayTitle);
             cell.calendarTitleColor = self.calendarTodayTitleColor;
             cell.dateColor = self.dateColor;
             
         } else {
-            
+            cell.calendarDate = getNoneNil(self.calendarManage.calendarDate[indexPath.row]);// 公历日期
+            cell.calendarTitle = getNoneNil(self.calendarManage.chineseCalendarDate[indexPath.row]);// 农历日期
+            cell.dateColor = nil;
         }
         
         return cell;
