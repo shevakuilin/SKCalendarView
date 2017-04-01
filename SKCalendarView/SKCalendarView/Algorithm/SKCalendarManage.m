@@ -91,12 +91,6 @@
     // 向前推算日期到本月第一天
     NSDate * firstDay = date;
     self.todayInMonth = self.todayInMonth + self.dayInWeek - 2;// 计算在本月日历上所处的位置
-//    if (self.todayInMonth > 1) {
-//    }
-//    if (self.theMonth == self.month) {// 如果所查看月份是本月
-//    } else {
-//        self.todayInMonth = -1;
-//    }
     switch (self.dayInWeek) {// 根据本月第一天是周几，来确定之后的日期替换空占位
         case 1:// 周日
             for (NSInteger i = 1; i <= self.days; i ++) {
@@ -303,7 +297,6 @@
     } else if ([m_str isEqualToString:@"腊月"] && [d_str isEqualToString:@"三十"]) {
         chineseCal_str = @"除夕";
     }
-    
     // 公历节日
     NSDictionary * Holidays = @{@"01-01":@"元旦",
                                 @"02-14":@"情人节",
