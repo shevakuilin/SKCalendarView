@@ -18,6 +18,7 @@
 @property (nonatomic, strong) SKCalendarManage * calendarManage;
 @property (nonatomic, strong) UILabel * monthBackgroundLabel;
 @property (nonatomic, strong) NSDate * theDate;// 当前日期
+@property (nonatomic, assign) NSUInteger theYear;// 本年
 @property (nonatomic, assign) NSUInteger theDayInMonth;// 今天在本月所处位置
 @property (nonatomic, assign) NSInteger selectedRow;// 选择的日期
 @property (nonatomic, strong) NSString * displayChineseDate;//已显示的农历日期&节日&节气
@@ -47,6 +48,7 @@
         self.theDate = [NSDate date];
         self.monthBackgroundLabel.text = [NSString stringWithFormat:@"%@", @(_calendarManage.month)];
         self.theDayInMonth = _calendarManage.todayInMonth;
+        self.theYear = _calendarManage.year;
         [self reloadExternalDate];
     }
     return _calendarManage;
@@ -76,38 +78,6 @@
     return _selectedRow;
 }
 
-//- (NSUInteger)year
-//{
-//    if (_year == 0) {
-//        _year = self.calendarManage.year;
-//    }
-//    return _year;
-//}
-//
-//- (NSUInteger)month
-//{
-//    if (_month == 0) {
-//        _month = self.calendarManage.month;
-//    }
-//    return _month;
-//}
-
-//- (NSUInteger)theMonth
-//{
-//    if (_theMonth == 0) {
-//        _theMonth = self.calendarManage.theMonth;
-//    }
-//    return _theMonth;
-//}
-
-//- (NSString *)chineseYear
-//{
-//    if (isEmpty(_chineseYear)) {
-//        _chineseYear = self.calendarManage.chineseYear;
-//    }
-//    return _chineseYear;
-//}
-
 - (NSInteger)todayInMonth
 {
     if (_todayInMonth == 0) {
@@ -115,38 +85,6 @@
     }
     return _todayInMonth;
 }
-
-//- (NSUInteger)dayInWeek
-//{
-//    if (_dayInWeek == 0) {
-//        _dayInWeek = self.calendarManage.dayInWeek;
-//    }
-//    return _dayInWeek;
-//}
-//
-//- (NSString *)chineseMonth
-//{
-//    if (isEmpty(_chineseMonth)) {
-//        _chineseMonth = self.calendarManage.chineseMonth;
-//    }
-//    return _chineseMonth;
-//}
-//
-//- (NSMutableArray *)chineseCalendarDay
-//{
-//    if (isEmpty(_chineseCalendarDay)) {
-//        _chineseCalendarDay = self.calendarManage.chineseCalendarDay;
-//    }
-//    return _chineseCalendarDay;
-//}
-//
-//- (NSMutableArray *)chineseCalendarDate
-//{
-//    if (isEmpty(_chineseCalendarDate)) {
-//        _chineseCalendarDate = self.calendarManage.chineseCalendarDate;
-//    }
-//    return _chineseCalendarDate;
-//}
 
 
 #pragma mark - 创建界面
@@ -212,130 +150,82 @@
 - (void)setDayoffInWeekColor:(UIColor *)dayoffInWeekColor
 {
     _dayoffInWeekColor = dayoffInWeekColor;
-    if (!dayoffInWeekColor) {// 默认红色
-        dayoffInWeekColor = [UIColor redColor];
-    }
 }
 
 
 - (void)setCalendarTodayColor:(UIColor *)calendarTodayColor
 {
     _calendarTodayColor = calendarTodayColor;
-    if (!calendarTodayColor) {// 默认红色
-        calendarTodayColor = [UIColor redColor];
-    }
 }
 
 - (void)setDateColor:(UIColor *)dateColor
 {
     _dateColor = dateColor;
-    if (!dateColor) {
-        dateColor = nil;
-    }
 }
 
 - (void)setDateIcon:(UIImage *)dateIcon
 {
     _dateIcon = dateIcon;
-    if (!dateIcon) {
-        dateIcon = nil;
-    }
 }
 
 - (void)setHolidayBackgroundColor:(UIColor *)holidayBackgroundColor
 {
     _holidayBackgroundColor = holidayBackgroundColor;
-    if (!holidayBackgroundColor) {
-        holidayBackgroundColor = nil;
-    }
 }
 
 - (void)setSolarTeromBackgroundColor:(UIColor *)solarTeromBackgroundColor
 {
     _solarTeromBackgroundColor = solarTeromBackgroundColor;
-    if (!solarTeromBackgroundColor) {
-        solarTeromBackgroundColor = nil;
-    }
 }
 
 - (void)setDateBackgroundColor:(UIColor *)dateBackgroundColor
 {
     _dateBackgroundColor = dateBackgroundColor;
-    if (!dateBackgroundColor) {
-        dateBackgroundColor = nil;
-    }
 }
 
 - (void)setSpringColor:(UIColor *)springColor
 {
     _springColor = springColor;
-    if (!springColor) {
-        springColor = [UIColor colorWithRed:48 / 255.0 green:200 / 255.0 blue:104 / 255.0 alpha:1];
-    }
 }
 
 - (void)setSummerColor:(UIColor *)summerColor
 {
     _summerColor = summerColor;
-    if (!summerColor) {
-        summerColor = [UIColor colorWithRed:18 / 255.0 green:96 / 255.0 blue:0 alpha:8];
-    }
 }
 
 - (void)setAutumnColor:(UIColor *)autumnColor
 {
     _autumnColor = autumnColor;
-    if (!autumnColor) {
-        autumnColor = [UIColor colorWithRed:232 / 255.0 green:195 / 255.0 blue:0 / 255.0 alpha:1];
-    }
 }
 
 - (void)setWinterColor:(UIColor *)winterColor
 {
     _winterColor = winterColor;
-    if (!winterColor) {
-        winterColor = [UIColor colorWithRed:77 / 255.0 green:161 / 255.0 blue:255 / 255.0 alpha:1];
-    }
 }
 
 - (void)setDateBackgroundIcon:(UIImage *)dateBackgroundIcon
 {
     _dateBackgroundIcon = dateBackgroundIcon;
-    if (!dateBackgroundIcon) {
-        dateBackgroundIcon = nil;
-    }
 }
 
 - (void)setCalendarTodayTitle:(NSString *)calendarTodayTitle
 {
     _calendarTodayTitle = calendarTodayTitle;
-    if (!calendarTodayTitle) {
-        calendarTodayTitle = @"今天";
-    }
 }
 
 - (void)setCalendarTodayTitleColor:(UIColor *)calendarTodayTitleColor
 {
     _calendarTodayTitleColor = calendarTodayTitleColor;
-    if (!calendarTodayTitleColor) {
-        calendarTodayTitleColor = [UIColor redColor];
-    }
 }
 
 - (void)setHolidayColor:(UIColor *)holidayColor
 {
     _holidayColor = holidayColor;
-    if (!holidayColor) {
-        holidayColor = [UIColor redColor];
-    }
 }
 
 - (void)setCalendarTitleColor:(UIColor *)calendarTitleColor
 {
     _calendarTitleColor = calendarTitleColor;
-    if (!calendarTitleColor) {
-        calendarTitleColor = nil;
-    }
 }
 
 - (void)setEnableClickEffect:(BOOL)enableClickEffect
@@ -381,6 +271,15 @@
         [self.calendarCollectionView reloadData];
         [self reloadExternalDate];
     }
+}
+
+#pragma mark - 查看指定日期
+- (void)checkCalendarWithAppointDate:(NSDate *)date
+{
+    [self.calendarManage checkThisMonthRecordFromToday:date];
+    self.monthBackgroundLabel.text = [NSString stringWithFormat:@"%@", @(self.calendarManage.month)];
+    [self.calendarCollectionView reloadData];
+    [self reloadExternalDate];
 }
 
 #pragma mark - 更新外部数据
@@ -461,7 +360,7 @@
             cell.dateColor = nil;
         }
         // 是否属于今天
-        if (self.theDayInMonth == indexPath.row && self.calendarManage.month == self.calendarManage.theMonth) {
+        if (self.theDayInMonth == indexPath.row && self.calendarManage.month == self.calendarManage.theMonth && self.theYear == self.calendarManage.year) {
             cell.calendarDate = getNoneNil(self.calendarManage.calendarDate[indexPath.row]);// 公历日期
             cell.calendarTitle = getNoneNil(self.calendarManage.chineseCalendarDate[indexPath.row]);// 农历日期
             cell.calendarDateColor = self.calendarTodayColor;
@@ -478,7 +377,7 @@
         if (![self.calendarManage.chineseCalendarDay[indexPath.row] isEqualToString:self.calendarManage.chineseCalendarDate[indexPath.row]]) {
             NSString * specialDay = self.calendarManage.chineseCalendarDate[indexPath.row];
             // 节气
-            if (specialDay.length == 2 && ![specialDay isEqualToString:@"除夕"] && ![specialDay isEqualToString:@"春节"] && ![specialDay isEqualToString:@"七夕"]) {
+            if (specialDay.length == 2 && ![specialDay isEqualToString:@"除夕"] && ![specialDay isEqualToString:@"春节"] && ![specialDay isEqualToString:@"七夕"] && ![specialDay isEqualToString:@"元旦"] && ![specialDay isEqualToString:@"小年"]) {
                 cell.dateBackgroundIcon = self.dateBackgroundIcon;
                 if (self.calendarManage.month >= 2 && self.calendarManage.month <= 4) {// 春季
                     cell.calendarTitleColor = self.springColor;
@@ -489,11 +388,11 @@
                 } else if (self.calendarManage.month >= 8 && self.calendarManage.month <= 10) {// 秋季
                     cell.calendarTitleColor = self.autumnColor;
 
-                } else if (self.calendarManage.month >= 11 && self.calendarManage.month <=12){// 冬季
+                } else if (self.calendarManage.month >= 11 || self.calendarManage.month == 1){// 冬季
                     cell.calendarTitleColor = self.winterColor;
                 }
             } else {// 节日
-                if (specialDay.length == 3 || [specialDay isEqualToString:@"除夕"] || [specialDay isEqualToString:@"春节"] || [specialDay isEqualToString:@"七夕"]) {
+                if (specialDay.length == 3 || [specialDay isEqualToString:@"除夕"] || [specialDay isEqualToString:@"春节"] || [specialDay isEqualToString:@"七夕"] || [specialDay isEqualToString:@"元旦"] || [specialDay isEqualToString:@"小年"]) {
                     cell.calendarTitleColor = self.holidayColor;
                     cell.dateBackgroundIcon = self.dateBackgroundIcon;
                 }

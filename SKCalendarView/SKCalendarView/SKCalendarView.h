@@ -56,4 +56,10 @@
  * @param chineseDay 农历纯日期(不包括节日&节气)
  */
 - (NSString *)getHolidayAndSolarTermsWithChineseDay:(NSString *)chineseDay;
+
+/** 查看指定日期
+ * @param date 指定查看的日期
+ */
+- (void)checkCalendarWithAppointDate:(NSDate *)date;
+
 @end
