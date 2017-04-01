@@ -71,8 +71,8 @@
     }
     comps = [calendar components:unitFlags fromDate:date];
     self.dayInWeek = [comps weekday];// 是周几
-    self.year = [comps year];
-    self.month = [comps month];
+    self.year = [comps year];// 公历年
+    self.month = [comps month];// 公里月
 
     [self creatcalendarArrayWithDate:date];
 }
@@ -82,15 +82,17 @@
 {
     self.calendarDate = [NSMutableArray new];
     self.chineseCalendarDate = [NSMutableArray new];
+    self.chineseCalendarDay = [NSMutableArray new];
     for (NSInteger j = 0; j < 42; j ++) {// 创建空占位数组
         [self.calendarDate addObject:@""];
         [self.chineseCalendarDate addObject:@""];
+        [self.chineseCalendarDay addObject:@""];
     }
     // 向前推算日期到本月第一天
     NSDate * firstDay = date;
-    if (self.todayInMonth > 1) {
-        self.todayInMonth = self.todayInMonth + self.dayInWeek - 2;// 计算在本月日历上所处的位置
-    }
+    self.todayInMonth = self.todayInMonth + self.dayInWeek - 2;// 计算在本月日历上所处的位置
+//    if (self.todayInMonth > 1) {
+//    }
 //    if (self.theMonth == self.month) {// 如果所查看月份是本月
 //    } else {
 //        self.todayInMonth = -1;
@@ -99,12 +101,14 @@
         case 1:// 周日
             for (NSInteger i = 1; i <= self.days; i ++) {
                 [self.calendarDate replaceObjectAtIndex:i - 1 withObject:@(i)];// 替换公历日期
-                for (NSInteger j = 1; j <= self.days; j ++) {
+                for (NSInteger j = 1; j <= self.days; j ++) {// 公历日期
                     // 向后推算至本月末
                     NSInteger hours = (j - 1) * 24;
                     NSDate * date = [NSDate dateWithTimeInterval:hours * 60 * 60 sinceDate:firstDay];
-                    NSString * chineseDay = [self calculationChinaCalendarWithDate:date];
+                    NSString * chineseDay = [self calculationChinaCalendarWithDate:date dispalyHoliday:YES];
                     [self.chineseCalendarDate replaceObjectAtIndex:j - 1 withObject:chineseDay];// 替换农历日期
+                    NSString * noHoliday = [self calculationChinaCalendarWithDate:date dispalyHoliday:NO];
+                    [self.chineseCalendarDay replaceObjectAtIndex:j - 1 withObject:noHoliday];
                 }
             }
             self.isIncreaseHeight = NO;
@@ -119,8 +123,10 @@
                             // 向后推算至本月末
                             NSInteger hours = (j - 2) * 24;
                             NSDate * date = [NSDate dateWithTimeInterval:hours * 60 * 60 sinceDate:firstDay];
-                            NSString * chineseDay = [self calculationChinaCalendarWithDate:date];
+                            NSString * chineseDay = [self calculationChinaCalendarWithDate:date dispalyHoliday:YES];
                             [self.chineseCalendarDate replaceObjectAtIndex:j - 1 withObject:chineseDay];// 替换农历日期
+                            NSString * noHoliday = [self calculationChinaCalendarWithDate:date dispalyHoliday:NO];
+                            [self.chineseCalendarDay replaceObjectAtIndex:j - 1 withObject:noHoliday];
                         }
                     }
 
@@ -138,8 +144,10 @@
                             // 向后推算至本月末
                             NSInteger hours = (j - 3) * 24;
                             NSDate * date = [NSDate dateWithTimeInterval:hours * 60 * 60 sinceDate:firstDay];
-                            NSString * chineseDay = [self calculationChinaCalendarWithDate:date];
+                            NSString * chineseDay = [self calculationChinaCalendarWithDate:date dispalyHoliday:YES];
                             [self.chineseCalendarDate replaceObjectAtIndex:j - 1 withObject:chineseDay];// 替换农历日期
+                            NSString * noHoliday = [self calculationChinaCalendarWithDate:date dispalyHoliday:NO];
+                            [self.chineseCalendarDay replaceObjectAtIndex:j - 1 withObject:noHoliday];
                         }
                     }
 
@@ -157,8 +165,10 @@
                             // 向后推算至本月末
                             NSInteger hours = (j - 4) * 24;
                             NSDate * date = [NSDate dateWithTimeInterval:hours * 60 * 60 sinceDate:firstDay];
-                            NSString * chineseDay = [self calculationChinaCalendarWithDate:date];
+                            NSString * chineseDay = [self calculationChinaCalendarWithDate:date dispalyHoliday:YES];
                             [self.chineseCalendarDate replaceObjectAtIndex:j - 1 withObject:chineseDay];// 替换农历日期
+                            NSString * noHoliday = [self calculationChinaCalendarWithDate:date dispalyHoliday:NO];
+                            [self.chineseCalendarDay replaceObjectAtIndex:j - 1 withObject:noHoliday];
                         }
                     }
 
@@ -176,8 +186,10 @@
                             // 向后推算至本月末
                             NSInteger hours = (j - 5) * 24;
                             NSDate * date = [NSDate dateWithTimeInterval:hours * 60 * 60 sinceDate:firstDay];
-                            NSString * chineseDay = [self calculationChinaCalendarWithDate:date];
+                            NSString * chineseDay = [self calculationChinaCalendarWithDate:date dispalyHoliday:YES];
                             [self.chineseCalendarDate replaceObjectAtIndex:j - 1 withObject:chineseDay];// 替换农历日期
+                            NSString * noHoliday = [self calculationChinaCalendarWithDate:date dispalyHoliday:NO];
+                            [self.chineseCalendarDay replaceObjectAtIndex:j - 1 withObject:noHoliday];
                         }
                     }
 
@@ -195,8 +207,10 @@
                             // 向后推算至本月末
                             NSInteger hours = (j - 6) * 24;
                             NSDate * date = [NSDate dateWithTimeInterval:hours * 60 * 60 sinceDate:firstDay];
-                            NSString * chineseDay = [self calculationChinaCalendarWithDate:date];
+                            NSString * chineseDay = [self calculationChinaCalendarWithDate:date dispalyHoliday:YES];
                             [self.chineseCalendarDate replaceObjectAtIndex:j - 1 withObject:chineseDay];// 替换农历日期
+                            NSString * noHoliday = [self calculationChinaCalendarWithDate:date dispalyHoliday:NO];
+                            [self.chineseCalendarDay replaceObjectAtIndex:j - 1 withObject:noHoliday];
                         }
                     }
 
@@ -218,8 +232,10 @@
                             // 向后推算至本月末
                             NSInteger hours = (j - 7) * 24;
                             NSDate * date = [NSDate dateWithTimeInterval:hours * 60 * 60 sinceDate:firstDay];
-                            NSString * chineseDay = [self calculationChinaCalendarWithDate:date];
+                            NSString * chineseDay = [self calculationChinaCalendarWithDate:date dispalyHoliday:YES];
                             [self.chineseCalendarDate replaceObjectAtIndex:j - 1 withObject:chineseDay];// 替换农历日期
+                            NSString * noHoliday = [self calculationChinaCalendarWithDate:date dispalyHoliday:NO];
+                            [self.chineseCalendarDay replaceObjectAtIndex:j - 1 withObject:noHoliday];
                         }
                     }
 
@@ -237,7 +253,7 @@
 }
 
 #pragma mark - 计算农历日期
-- (NSString *)calculationChinaCalendarWithDate:(NSDate *)date
+- (NSString *)calculationChinaCalendarWithDate:(NSDate *)date dispalyHoliday:(BOOL)display
 {
     if (isEmpty(date)) {
         return nil;
@@ -255,6 +271,7 @@
     
     self.chineseYear = [chineseYears objectAtIndex:localeComp.year - 1];
     NSString * m_str = [chineseMonths objectAtIndex:localeComp.month - 1];
+    self.chineseMonth = m_str;
     NSString * d_str = [chineseDays objectAtIndex:localeComp.day - 1];
 
     NSString * chineseCal_str = d_str;
@@ -360,7 +377,7 @@
             break;
     }
     
-    // 二十四节气
+    // 二十四节气, 将节气按月份拆开计算，否则由于计算积日所需日期转换stringFromDate方法过于耗时将会造成线程卡顿
     NSString * solarTerms = @"";
     switch (self.month) {// 过滤月份
         case 1:
@@ -567,7 +584,10 @@
             break;
     }
     
-    return chineseCal_str;
+    if (display == YES) {// 需要显示假期&节日
+        return chineseCal_str;
+    }
+    return d_str;
 }
 
 #pragma mark - 计算二十四节气的具体日期

@@ -32,9 +32,21 @@
 @property (nonatomic, assign) BOOL enableClickEffect;// 开启点击效果
 @property (nonatomic, assign) BOOL enableDateRoundCorner;// 开启日期圆角
 @property (nonatomic, weak) id <SKCalendarViewDelegate> delegate;
+
 @property (nonatomic, assign) NSUInteger lastMonth;// 上个月
 @property (nonatomic, assign) NSUInteger nextMonth;// 下个月
 @property (nonatomic, assign) BOOL checkLastMonth;// 查看上个月
 @property (nonatomic, assign) BOOL checkNextMonth;// 查看下个月
+@property (assign, nonatomic) NSUInteger year;// 当前年
+@property (assign, nonatomic) NSUInteger month;// 当前月
+@property (strong, nonatomic) NSString * chineseYear;// 农历年
+@property (strong, nonatomic) NSString * chineseMonth;// 农历月
+@property (strong, nonatomic) NSMutableArray * chineseCalendarDay;// 农历纯日期(不包含节日和节气)
+@property (strong, nonatomic) NSMutableArray * chineseCalendarDate;// 农历日期&节日&节气
+@property (assign, nonatomic) NSInteger todayInMonth;// 今天在本月是第几天
 
+/** 根据农历日期获取节日&节气
+ * @param chineseDay 农历纯日期(不包括节日&节气)
+ */
+- (NSString *)getHolidayAndSolarTermsWithChineseDay:(NSString *)chineseDay;
 @end

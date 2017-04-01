@@ -159,7 +159,7 @@
 - (void)setCalendarTitle:(NSString *)calendarTitle
 {
     self.titleLabel.text = calendarTitle;
-    _calendarTitle = getNoneNil(calendarTitle);
+    _calendarTitle = calendarTitle;
 }
 
 - (void)setCalendarTitleColor:(UIColor *)calendarTitleColor

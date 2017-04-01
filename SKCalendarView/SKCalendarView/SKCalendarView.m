@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSDate * theDate;// 当前日期
 @property (nonatomic, assign) NSUInteger theDayInMonth;// 今天在本月所处位置
 @property (nonatomic, assign) NSInteger selectedRow;// 选择的日期
+@property (nonatomic, strong) NSString * displayChineseDate;//已显示的农历日期&节日&节气
 
 @end
 
@@ -46,6 +47,7 @@
         self.theDate = [NSDate date];
         self.monthBackgroundLabel.text = [NSString stringWithFormat:@"%@", @(_calendarManage.month)];
         self.theDayInMonth = _calendarManage.todayInMonth;
+        [self reloadExternalDate];
     }
     return _calendarManage;
 }
@@ -71,9 +73,81 @@
     if (_selectedRow == 0) {
         _selectedRow = - 1;
     }
-    
     return _selectedRow;
 }
+
+//- (NSUInteger)year
+//{
+//    if (_year == 0) {
+//        _year = self.calendarManage.year;
+//    }
+//    return _year;
+//}
+//
+//- (NSUInteger)month
+//{
+//    if (_month == 0) {
+//        _month = self.calendarManage.month;
+//    }
+//    return _month;
+//}
+
+//- (NSUInteger)theMonth
+//{
+//    if (_theMonth == 0) {
+//        _theMonth = self.calendarManage.theMonth;
+//    }
+//    return _theMonth;
+//}
+
+//- (NSString *)chineseYear
+//{
+//    if (isEmpty(_chineseYear)) {
+//        _chineseYear = self.calendarManage.chineseYear;
+//    }
+//    return _chineseYear;
+//}
+
+- (NSInteger)todayInMonth
+{
+    if (_todayInMonth == 0) {
+        _todayInMonth = self.calendarManage.todayInMonth;
+    }
+    return _todayInMonth;
+}
+
+//- (NSUInteger)dayInWeek
+//{
+//    if (_dayInWeek == 0) {
+//        _dayInWeek = self.calendarManage.dayInWeek;
+//    }
+//    return _dayInWeek;
+//}
+//
+//- (NSString *)chineseMonth
+//{
+//    if (isEmpty(_chineseMonth)) {
+//        _chineseMonth = self.calendarManage.chineseMonth;
+//    }
+//    return _chineseMonth;
+//}
+//
+//- (NSMutableArray *)chineseCalendarDay
+//{
+//    if (isEmpty(_chineseCalendarDay)) {
+//        _chineseCalendarDay = self.calendarManage.chineseCalendarDay;
+//    }
+//    return _chineseCalendarDay;
+//}
+//
+//- (NSMutableArray *)chineseCalendarDate
+//{
+//    if (isEmpty(_chineseCalendarDate)) {
+//        _chineseCalendarDate = self.calendarManage.chineseCalendarDate;
+//    }
+//    return _chineseCalendarDate;
+//}
+
 
 #pragma mark - 创建界面
 - (void)customView
@@ -199,12 +273,14 @@
 {
     _checkLastMonth = checkLastMonth;
     if (checkLastMonth == YES) {
+        self.selectedRow = -1;// 重置已选日期
         NSInteger hours = (self.calendarManage.days - 1) * -24;
         NSDate * date = [NSDate dateWithTimeInterval:hours * 60 * 60 sinceDate:self.theDate];
         [self.calendarManage checkThisMonthRecordFromToday:date];
         self.theDate = date;
         self.monthBackgroundLabel.text = [NSString stringWithFormat:@"%@", @(self.calendarManage.month)];
         [self.calendarCollectionView reloadData];
+        [self reloadExternalDate];
     }
 }
 
@@ -212,6 +288,7 @@
 {
     _checkNextMonth = checkNextMonth;
     if (checkNextMonth == YES) {
+        self.selectedRow = -1;// 重置已选日期
         NSUInteger todayInMonth = self.calendarManage.todayInMonth;
         if (todayInMonth > 1) {
             todayInMonth = self.calendarManage.todayInMonth - self.calendarManage.dayInWeek + 2;
@@ -223,7 +300,36 @@
         self.theDate = date;
         self.monthBackgroundLabel.text = [NSString stringWithFormat:@"%@", @(self.calendarManage.month)];
         [self.calendarCollectionView reloadData];
+        [self reloadExternalDate];
     }
+}
+
+#pragma mark - 更新外部数据
+- (void)reloadExternalDate
+{
+    self.year = self.calendarManage.year;
+    self.month = self.calendarManage.month;
+    self.chineseYear = self.calendarManage.chineseYear;
+    self.chineseMonth = self.calendarManage.chineseMonth;
+    self.chineseCalendarDay = self.calendarManage.chineseCalendarDay;
+    self.chineseCalendarDate = self.calendarManage.chineseCalendarDate;
+}
+
+#pragma mark - 获取节日&节气
+- (NSString *)getHolidayAndSolarTermsWithChineseDay:(NSString *)chineseDay
+{
+    NSString * result = @"";
+    NSUInteger row = 0;
+    if (self.selectedRow < 0) {
+        row = self.todayInMonth;// 默认今天
+    } else {
+        row = self.selectedRow;
+    }
+    NSString * date = getNoneNil(self.calendarManage.chineseCalendarDate[row]);
+    if (![chineseDay isEqualToString:date]) {
+        result = date;
+    }
+    return getNoneNil(result);
 }
 
 
@@ -264,7 +370,7 @@
         } else {
             cell.calendarDateColor = [UIColor blackColor];
         }
-        if (self.selectedRow == indexPath.row) {// 如果是选中的日期
+        if (self.selectedRow == indexPath.row && !isEmpty(self.calendarManage.calendarDate[indexPath.row])) {// 如果是选中的日期
             cell.enableClickEffect = YES;
             cell.dateColor = [UIColor colorWithRed:204 / 255.0 green:228 / 255.0 blue:236 / 255.0 alpha:1.0];
         } else {
@@ -304,10 +410,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.selectedRow = indexPath.row;
     if ([self.delegate respondsToSelector:@selector(selectDateWithRow:)]) {
         [self.delegate selectDateWithRow:indexPath.row];
     }
-    self.selectedRow = indexPath.row;
     [self.calendarCollectionView reloadData];
 }
 

@@ -11,10 +11,14 @@
 #import "SKCalendarView.h"
 #import "SKCalendarAnimationManage.h"
 
-@interface ViewController ()
+@interface ViewController () <SKCalendarViewDelegate>
 @property (nonatomic, strong) SKCalendarView * calendarView;
 @property (nonatomic, strong) UIButton * nextButton;
 @property (nonatomic, strong) UIButton * lastButton;
+@property (nonatomic, strong) UILabel * chineseYearLabel;// 农历年
+@property (nonatomic, strong) UILabel * chineseMonthAndDayLabel;
+@property (nonatomic, strong) UILabel * yearLabel;// 公历年
+@property (nonatomic, strong) UILabel * holidayLabel;//节日&节气
 @property (nonatomic, assign) NSUInteger lastMonth;
 @property (nonatomic, assign) NSUInteger nextMonth;
 
@@ -47,6 +51,43 @@
         make.left.equalTo(self.calendarView.mas_left).with.offset(10);
     }];
     [self.lastButton addTarget:self action:@selector(checkLastMonthCalendar) forControlEvents:UIControlEventTouchUpInside];
+    
+    // 农历年
+    self.chineseYearLabel = [UILabel new];
+    [self.view addSubview:self.chineseYearLabel];
+    self.chineseYearLabel.font = [UIFont systemFontOfSize:18];
+    self.chineseYearLabel.text = [NSString stringWithFormat:@"%@年", self.calendarView.chineseYear];
+    self.chineseYearLabel.textAlignment = NSTextAlignmentCenter;
+    [self.chineseYearLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.calendarView.mas_bottom).with.offset(50);
+        make.centerX.equalTo(self.calendarView);
+    }];
+    
+    // 农历月日
+    self.chineseMonthAndDayLabel = [UILabel new];
+    [self.view addSubview:self.chineseMonthAndDayLabel];
+    self.chineseMonthAndDayLabel.font = [UIFont systemFontOfSize:15];
+    self.chineseMonthAndDayLabel.textColor = [UIColor redColor];
+    // 默认农历日期 今天
+    self.chineseMonthAndDayLabel.text = [NSString stringWithFormat:@"%@%@", self.calendarView.chineseMonth, getNoneNil(self.calendarView.chineseCalendarDay[self.calendarView.todayInMonth])];
+    self.chineseMonthAndDayLabel.textAlignment = NSTextAlignmentCenter;
+    [self.chineseMonthAndDayLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.chineseYearLabel.mas_bottom).with.offset(5);
+        make.centerX.equalTo(self.chineseYearLabel);
+    }];
+    
+    // 节日&节气
+    self.holidayLabel = [UILabel new];
+    [self.view addSubview:self.holidayLabel];
+    self.holidayLabel.font = [UIFont systemFontOfSize:15];
+    self.holidayLabel.textColor = [UIColor purpleColor];
+    self.holidayLabel.textAlignment = NSTextAlignmentCenter;
+    // 获取节日，注意：此处传入的参数为chineseCalendarDay(包含不节日等信息)
+    self.holidayLabel.text = [self.calendarView getHolidayAndSolarTermsWithChineseDay:getNoneNil(self.calendarView.chineseCalendarDay[self.calendarView.todayInMonth])];
+    [self.holidayLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.chineseMonthAndDayLabel.mas_bottom).with.offset(5);
+        make.centerX.equalTo(self.chineseMonthAndDayLabel);
+    }];
 }
 
 
@@ -63,6 +104,7 @@
         _calendarView.layer.cornerRadius = 5;
         _calendarView.layer.borderColor = [UIColor blackColor].CGColor;
         _calendarView.layer.borderWidth = 0.5;
+        _calendarView.delegate = self;// 获取点击日期的方法，一定要遵循协议
         _calendarView.calendarTodayTitleColor = [UIColor redColor];// 今天标题字体颜色
         _calendarView.calendarTodayTitle = @"今日";// 今天下标题
         _calendarView.dateColor = [UIColor orangeColor];// 今天日期数字背景颜色
@@ -80,6 +122,7 @@
     self.calendarView.checkNextMonth = YES;// 查看下月
     [self changeButton:self.nextButton isNext:YES];
     [SKCalendarAnimationManage animationWithView:self.calendarView andEffect:SK_ANIMATION_REVEAL isNext:YES];
+    self.chineseYearLabel.text = [NSString stringWithFormat:@"%@年", self.calendarView.chineseYear];// 农历年
 }
 
 - (void)checkLastMonthCalendar
@@ -87,6 +130,7 @@
     self.calendarView.checkLastMonth = YES;// 查看上月
     [self changeButton:self.lastButton isNext:NO];
     [SKCalendarAnimationManage animationWithView:self.calendarView andEffect:SK_ANIMATION_REVEAL isNext:NO];
+    self.chineseYearLabel.text = [NSString stringWithFormat:@"%@年", self.calendarView.chineseYear];// 农历年
 }
 
 // 改变上/下月按钮的月份
@@ -113,6 +157,14 @@
     }
     [self.lastButton setTitle:[NSString stringWithFormat:@"%@月", @(self.lastMonth)] forState:UIControlStateNormal];
     [self.nextButton setTitle:[NSString stringWithFormat:@"%@月", @(self.nextMonth)] forState:UIControlStateNormal];
+}
+
+#pragma mark - 点击日期
+- (void)selectDateWithRow:(NSUInteger)row
+{
+    self.chineseMonthAndDayLabel.text = [NSString stringWithFormat:@"%@%@", self.calendarView.chineseMonth, getNoneNil(self.calendarView.chineseCalendarDay[row])];
+    // 获取节日，注意：此处传入的参数为chineseCalendarDay(不包含节日等信息)
+    self.holidayLabel.text = [self.calendarView getHolidayAndSolarTermsWithChineseDay:getNoneNil(self.calendarView.chineseCalendarDay[row])];
 }
 
 @end
