@@ -40,7 +40,7 @@ SKCalendarView是一个高可控性的日历基础组件，为了提高应用的
 
 
 #### 日历设置
-···objectivec
+```objectivec
 _calendarView.calendarTodayTitleColor = [UIColor redColor];// 今天标题字体颜色
 _calendarView.calendarTodayTitle = @"今日";// 今天下标题
 _calendarView.dateColor = [UIColor orangeColor];// 今天日期数字背景颜色
