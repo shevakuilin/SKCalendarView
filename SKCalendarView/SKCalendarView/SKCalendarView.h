@@ -20,18 +20,25 @@
 @property (nonatomic, strong) UIColor * weekBackgroundColor;// 周的背景颜色
 @property (nonatomic, strong) UIColor * normalInWeekColor;// 周(除双休日外)字体颜色
 @property (nonatomic, strong) UIColor * dayoffInWeekColor;// 双休日字体颜色
-@property (nonatomic, strong) UIColor * calendarDateColor;// 日期字体颜色
 @property (nonatomic, strong) UIColor * calendarTodayColor;// 本日日期字体颜色
-@property (nonatomic, strong) UIColor * dateColor;// 日期颜色
+@property (nonatomic, strong) UIColor * dateColor;// 日期小背景颜色
 @property (nonatomic, strong) UIImage * dateIcon;// 日期图片
-@property (nonatomic, strong) UIColor * dateBackgroundColor;// 日期背景颜色
+@property (nonatomic, strong) UIColor * holidayBackgroundColor;// 节日背景颜色
+@property (nonatomic, strong) UIColor * solarTeromBackgroundColor;// 节气背景颜色
+@property (nonatomic, strong) UIColor * dateBackgroundColor;// 日期背景颜色(非节日&节气)
 @property (nonatomic, strong) UIImage * dateBackgroundIcon;// 日期背景图片
 @property (nonatomic, strong) NSString * calendarTodayTitle;// 本日日期标题
 @property (nonatomic, strong) UIColor * calendarTodayTitleColor;// 本日日期标题字体颜色
 @property (nonatomic, strong) UIColor * calendarTitleColor;// 日期标题字体颜色
+@property (nonatomic, strong) UIColor * holidayColor;// 节日标题字体颜色
+@property (nonatomic, strong) UIColor * springColor;// 春季节气颜色
+@property (nonatomic, strong) UIColor * summerColor;// 夏季节气颜色
+@property (nonatomic, strong) UIColor * autumnColor;// 秋季节气颜色
+@property (nonatomic, strong) UIColor * winterColor;// 冬季节气颜色
 @property (nonatomic, assign) BOOL enableClickEffect;// 开启点击效果
 @property (nonatomic, assign) BOOL enableDateRoundCorner;// 开启日期圆角
 @property (nonatomic, weak) id <SKCalendarViewDelegate> delegate;
+
 
 @property (nonatomic, assign) NSUInteger lastMonth;// 上个月
 @property (nonatomic, assign) NSUInteger nextMonth;// 下个月

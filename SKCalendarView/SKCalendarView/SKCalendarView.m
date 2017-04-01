@@ -212,51 +212,130 @@
 - (void)setDayoffInWeekColor:(UIColor *)dayoffInWeekColor
 {
     _dayoffInWeekColor = dayoffInWeekColor;
+    if (!dayoffInWeekColor) {// 默认红色
+        dayoffInWeekColor = [UIColor redColor];
+    }
 }
 
-- (void)setCalendarDateColor:(UIColor *)calendarDateColor
-{
-    _calendarDateColor = calendarDateColor;
-}
 
 - (void)setCalendarTodayColor:(UIColor *)calendarTodayColor
 {
     _calendarTodayColor = calendarTodayColor;
+    if (!calendarTodayColor) {// 默认红色
+        calendarTodayColor = [UIColor redColor];
+    }
 }
 
 - (void)setDateColor:(UIColor *)dateColor
 {
     _dateColor = dateColor;
+    if (!dateColor) {
+        dateColor = nil;
+    }
 }
 
 - (void)setDateIcon:(UIImage *)dateIcon
 {
     _dateIcon = dateIcon;
+    if (!dateIcon) {
+        dateIcon = nil;
+    }
+}
+
+- (void)setHolidayBackgroundColor:(UIColor *)holidayBackgroundColor
+{
+    _holidayBackgroundColor = holidayBackgroundColor;
+    if (!holidayBackgroundColor) {
+        holidayBackgroundColor = nil;
+    }
+}
+
+- (void)setSolarTeromBackgroundColor:(UIColor *)solarTeromBackgroundColor
+{
+    _solarTeromBackgroundColor = solarTeromBackgroundColor;
+    if (!solarTeromBackgroundColor) {
+        solarTeromBackgroundColor = nil;
+    }
 }
 
 - (void)setDateBackgroundColor:(UIColor *)dateBackgroundColor
 {
     _dateBackgroundColor = dateBackgroundColor;
+    if (!dateBackgroundColor) {
+        dateBackgroundColor = nil;
+    }
+}
+
+- (void)setSpringColor:(UIColor *)springColor
+{
+    _springColor = springColor;
+    if (!springColor) {
+        springColor = [UIColor colorWithRed:48 / 255.0 green:200 / 255.0 blue:104 / 255.0 alpha:1];
+    }
+}
+
+- (void)setSummerColor:(UIColor *)summerColor
+{
+    _summerColor = summerColor;
+    if (!summerColor) {
+        summerColor = [UIColor colorWithRed:18 / 255.0 green:96 / 255.0 blue:0 alpha:8];
+    }
+}
+
+- (void)setAutumnColor:(UIColor *)autumnColor
+{
+    _autumnColor = autumnColor;
+    if (!autumnColor) {
+        autumnColor = [UIColor colorWithRed:232 / 255.0 green:195 / 255.0 blue:0 / 255.0 alpha:1];
+    }
+}
+
+- (void)setWinterColor:(UIColor *)winterColor
+{
+    _winterColor = winterColor;
+    if (!winterColor) {
+        winterColor = [UIColor colorWithRed:77 / 255.0 green:161 / 255.0 blue:255 / 255.0 alpha:1];
+    }
 }
 
 - (void)setDateBackgroundIcon:(UIImage *)dateBackgroundIcon
 {
     _dateBackgroundIcon = dateBackgroundIcon;
+    if (!dateBackgroundIcon) {
+        dateBackgroundIcon = nil;
+    }
 }
 
 - (void)setCalendarTodayTitle:(NSString *)calendarTodayTitle
 {
     _calendarTodayTitle = calendarTodayTitle;
+    if (!calendarTodayTitle) {
+        calendarTodayTitle = @"今天";
+    }
 }
 
 - (void)setCalendarTodayTitleColor:(UIColor *)calendarTodayTitleColor
 {
     _calendarTodayTitleColor = calendarTodayTitleColor;
+    if (!calendarTodayTitleColor) {
+        calendarTodayTitleColor = [UIColor redColor];
+    }
+}
+
+- (void)setHolidayColor:(UIColor *)holidayColor
+{
+    _holidayColor = holidayColor;
+    if (!holidayColor) {
+        holidayColor = [UIColor redColor];
+    }
 }
 
 - (void)setCalendarTitleColor:(UIColor *)calendarTitleColor
 {
     _calendarTitleColor = calendarTitleColor;
+    if (!calendarTitleColor) {
+        calendarTitleColor = nil;
+    }
 }
 
 - (void)setEnableClickEffect:(BOOL)enableClickEffect
@@ -363,21 +442,26 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    // 日期
     if (collectionView == self.calendarCollectionView) {
         SKCalendarCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Calendar" forIndexPath:indexPath];
-        if ((indexPath.row + 1) % 7 == 0 || (indexPath.row + 1) % 7 == 1) {// 是否属于双休日
-            cell.calendarDateColor = [UIColor redColor];
+        // 是否属于双休日
+        if ((indexPath.row + 1) % 7 == 0 || (indexPath.row + 1) % 7 == 1) {
+            cell.calendarDateColor = self.dayoffInWeekColor;
         } else {
-            cell.calendarDateColor = [UIColor blackColor];
+            cell.calendarDateColor = self.normalInWeekColor;
         }
-        if (self.selectedRow == indexPath.row && !isEmpty(self.calendarManage.calendarDate[indexPath.row])) {// 如果是选中的日期
+        // 如果是选中的日期
+        if (self.selectedRow == indexPath.row && !isEmpty(self.calendarManage.calendarDate[indexPath.row])) {
             cell.enableClickEffect = YES;
             cell.dateColor = [UIColor colorWithRed:204 / 255.0 green:228 / 255.0 blue:236 / 255.0 alpha:1.0];
+            cell.calendarDateColor = [UIColor whiteColor];
         } else {
             cell.enableClickEffect = NO;
             cell.dateColor = nil;
         }
-        if (self.theDayInMonth == indexPath.row && self.calendarManage.month == self.calendarManage.theMonth) {// 是否属于今天
+        // 是否属于今天
+        if (self.theDayInMonth == indexPath.row && self.calendarManage.month == self.calendarManage.theMonth) {
             cell.calendarDate = getNoneNil(self.calendarManage.calendarDate[indexPath.row]);// 公历日期
             cell.calendarTitle = getNoneNil(self.calendarManage.chineseCalendarDate[indexPath.row]);// 农历日期
             cell.calendarDateColor = self.calendarTodayColor;
@@ -388,13 +472,40 @@
         } else {
             cell.calendarDate = getNoneNil(self.calendarManage.calendarDate[indexPath.row]);// 公历日期
             cell.calendarTitle = getNoneNil(self.calendarManage.chineseCalendarDate[indexPath.row]);// 农历日期
-//            cell.dateColor = nil;
             cell.calendarTitleColor = nil;
+        }
+        // 对节日&节气进行特殊处理
+        if (![self.calendarManage.chineseCalendarDay[indexPath.row] isEqualToString:self.calendarManage.chineseCalendarDate[indexPath.row]]) {
+            NSString * specialDay = self.calendarManage.chineseCalendarDate[indexPath.row];
+            // 节气
+            if (specialDay.length == 2 && ![specialDay isEqualToString:@"除夕"] && ![specialDay isEqualToString:@"春节"] && ![specialDay isEqualToString:@"七夕"]) {
+                cell.dateBackgroundIcon = self.dateBackgroundIcon;
+                if (self.calendarManage.month >= 2 && self.calendarManage.month <= 4) {// 春季
+                    cell.calendarTitleColor = self.springColor;
+                    
+                } else if (self.calendarManage.month >= 5 && self.calendarManage.month <= 7) {// 夏季
+                    cell.calendarTitleColor = self.summerColor;
+                    
+                } else if (self.calendarManage.month >= 8 && self.calendarManage.month <= 10) {// 秋季
+                    cell.calendarTitleColor = self.autumnColor;
+
+                } else if (self.calendarManage.month >= 11 && self.calendarManage.month <=12){// 冬季
+                    cell.calendarTitleColor = self.winterColor;
+                }
+            } else {// 节日
+                if (specialDay.length == 3 || [specialDay isEqualToString:@"除夕"] || [specialDay isEqualToString:@"春节"] || [specialDay isEqualToString:@"七夕"]) {
+                    cell.calendarTitleColor = self.holidayColor;
+                    cell.dateBackgroundIcon = self.dateBackgroundIcon;
+                }
+            }
+        } else {
+            cell.calendarTitleColor = self.calendarTitleColor;
+            cell.dateBackgroundIcon = nil;
         }
         
         return cell;
         
-    } else {
+    } else {// 周
         SKWeekCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Week" forIndexPath:indexPath];
         cell.week = getNoneNil(self.calendarManage.weekList[indexPath.row]);
         cell.weekBackgroundColor = self.weekCollectionView.backgroundColor;

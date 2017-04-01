@@ -52,6 +52,16 @@
     }];
     [self.lastButton addTarget:self action:@selector(checkLastMonthCalendar) forControlEvents:UIControlEventTouchUpInside];
     
+    // 公历年
+    self.yearLabel = [UILabel new];
+    [self.view addSubview:self.yearLabel];
+    self.yearLabel.font = [UIFont systemFontOfSize:18];
+    self.yearLabel.text = [NSString stringWithFormat:@"%@年%@月", @(self.calendarView.year), @(self.calendarView.month)];
+    [self.yearLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.calendarView.mas_bottom).with.offset(5);
+        make.centerX.equalTo(self.calendarView);
+    }];
+    
     // 农历年
     self.chineseYearLabel = [UILabel new];
     [self.view addSubview:self.chineseYearLabel];
@@ -109,6 +119,11 @@
         _calendarView.calendarTodayTitle = @"今日";// 今天下标题
         _calendarView.dateColor = [UIColor orangeColor];// 今天日期数字背景颜色
         _calendarView.calendarTodayColor = [UIColor whiteColor];// 今天日期字体颜色
+        _calendarView.dayoffInWeekColor = [UIColor redColor];
+        _calendarView.springColor = [UIColor colorWithRed:48 / 255.0 green:200 / 255.0 blue:104 / 255.0 alpha:1];// 春季节气颜色
+        _calendarView.summerColor = [UIColor colorWithRed:18 / 255.0 green:96 / 255.0 blue:0 alpha:8];// 夏季节气颜色
+        _calendarView.autumnColor = [UIColor colorWithRed:232 / 255.0 green:195 / 255.0 blue:0 / 255.0 alpha:1];// 秋季节气颜色
+        _calendarView.winterColor = [UIColor colorWithRed:77 / 255.0 green:161 / 255.0 blue:255 / 255.0 alpha:1];// 冬季节气颜色
         self.lastMonth = _calendarView.lastMonth;// 获取上个月的月份
         self.nextMonth = _calendarView.nextMonth;// 获取下个月的月份
     }
@@ -123,6 +138,7 @@
     [self changeButton:self.nextButton isNext:YES];
     [SKCalendarAnimationManage animationWithView:self.calendarView andEffect:SK_ANIMATION_REVEAL isNext:YES];
     self.chineseYearLabel.text = [NSString stringWithFormat:@"%@年", self.calendarView.chineseYear];// 农历年
+    self.yearLabel.text = [NSString stringWithFormat:@"%@年%@月", @(self.calendarView.year), @(self.calendarView.month)];// 公历年
 }
 
 - (void)checkLastMonthCalendar
@@ -131,6 +147,7 @@
     [self changeButton:self.lastButton isNext:NO];
     [SKCalendarAnimationManage animationWithView:self.calendarView andEffect:SK_ANIMATION_REVEAL isNext:NO];
     self.chineseYearLabel.text = [NSString stringWithFormat:@"%@年", self.calendarView.chineseYear];// 农历年
+    self.yearLabel.text = [NSString stringWithFormat:@"%@年%@月", @(self.calendarView.year), @(self.calendarView.month)];// 公历年
 }
 
 // 改变上/下月按钮的月份

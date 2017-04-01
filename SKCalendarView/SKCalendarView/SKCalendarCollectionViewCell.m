@@ -50,8 +50,9 @@
     // 背景图片
     self.backgroundIcon = [UIImageView new];
     [self.baseView addSubview:self.backgroundIcon];
+    self.backgroundIcon.alpha = 0.5;
     [self.backgroundIcon mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.baseView).with.insets(UIEdgeInsetsMake(0, 0, 0, 0));
+        make.edges.equalTo(self.baseView).with.insets(UIEdgeInsetsMake(1, 1, 1, 1));
     }];
     
     // 日期图片
@@ -142,18 +143,14 @@
 - (void)setDateBackgroundColor:(UIColor *)dateBackgroundColor
 {
     _dateBackgroundColor = dateBackgroundColor;
-    if (!isEmpty(dateBackgroundColor)) {
-        self.backgroundColor = dateBackgroundColor;
-        self.backgroundIcon.backgroundColor = self.backgroundColor;
-    }
+    self.backgroundColor = dateBackgroundColor;
+    self.backgroundIcon.backgroundColor = self.backgroundColor;
 }
 
 -(void)setDateBackgroundIcon:(UIImage *)dateBackgroundIcon
 {
     _dateBackgroundIcon = dateBackgroundIcon;
-    if (!isEmpty(dateBackgroundIcon)) {
-        self.backgroundIcon.image = dateBackgroundIcon;
-    }
+    self.backgroundIcon.image = dateBackgroundIcon;
 }
 
 - (void)setCalendarTitle:(NSString *)calendarTitle
