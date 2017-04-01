@@ -10,8 +10,9 @@
 #define SKConstant_h
 
 #import "SKDateSecurity.h"
+#import "SKCalendarView.h"
+#import "SKCalendarAnimationManage.h"
 #import <Masonry/Masonry.h>
-#import <SKArchCutter/SKArchCutter.h>
 
 #define isEmpty(x)  [SKDateSecurity isNilOrEmpty:x]
 #define getNoneNil(object)  [SKDateSecurity getNoneNilString:object]

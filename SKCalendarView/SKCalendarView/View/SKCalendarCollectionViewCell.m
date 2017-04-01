@@ -8,7 +8,6 @@
 
 #import "SKCalendarCollectionViewCell.h"
 #import "SKConstant.h"
-#import "SKCalendarAnimationManage.h"
 
 @interface SKCalendarCollectionViewCell ()
 @property (nonatomic, strong) UIView * baseView;// 底部view

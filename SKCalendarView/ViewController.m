@@ -8,8 +8,6 @@
 
 #import "ViewController.h"
 #import "SKConstant.h"
-#import "SKCalendarView.h"
-#import "SKCalendarAnimationManage.h"
 
 @interface ViewController () <SKCalendarViewDelegate>
 @property (nonatomic, strong) SKCalendarView * calendarView;
