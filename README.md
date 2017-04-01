@@ -119,5 +119,11 @@ self.holidayLabel.text = [self.calendarView getHolidayAndSolarTermsWithChineseDa
 ```
 
 
+#### 获取点击的日期
+```objectivec
+- (void)selectDateWithRow:(NSUInteger)row
+```
+
+
 ## 感谢你花时间阅读以上内容, 如果这个项目能够帮助到你，记得告诉我
 Email: shevakuilin@gmail.com

@@ -322,14 +322,14 @@
     if (collectionView == self.calendarCollectionView) {
         if (self.calendarManage.isIncreaseHeight == YES) {
             [self.calendarCollectionView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.height.mas_offset(218 + (self.frame.size.height / 7.5));
+                make.height.mas_offset(6 * (self.frame.size.height / 7.5));
             }];
             return 42;
             
         } else {
             if (self.calendarCollectionView.frame.size.height > 218) {
                 [self.calendarCollectionView mas_updateConstraints:^(MASConstraintMaker *make) {
-                    make.height.mas_offset(218);
+                    make.height.mas_offset(5 * (self.frame.size.height / 7.5));
                 }];
             }
             return 35;
