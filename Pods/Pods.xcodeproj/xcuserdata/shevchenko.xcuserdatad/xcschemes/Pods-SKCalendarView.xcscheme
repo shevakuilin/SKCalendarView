@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '2085E2648926B8C2E6199DE9426191FE'
+               BlueprintIdentifier = 'A8AB1602D26043125CA7233E64420AA1'
                BlueprintName = 'Pods-SKCalendarView'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libPods-SKCalendarView.a'>
