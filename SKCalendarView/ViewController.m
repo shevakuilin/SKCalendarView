@@ -202,7 +202,8 @@
     [self.calendarView checkCalendarWithAppointDate:[NSDate date]];
     self.lastMonth = _calendarView.lastMonth;// 获取上个月的月份
     self.nextMonth = _calendarView.nextMonth;// 获取下个月的月份
-
+    [self.lastButton setTitle:[NSString stringWithFormat:@"%@月", @(self.lastMonth)] forState:UIControlStateNormal];
+    [self.nextButton setTitle:[NSString stringWithFormat:@"%@月", @(self.nextMonth)] forState:UIControlStateNormal];
 }
 
 @end

@@ -46,8 +46,6 @@
         // 设置初始化日期，默认查看今天所处月份日历
         [_calendarManage checkThisMonthRecordFromToday:[NSDate date]];
         self.theDate = [NSDate date];
-        self.monthBackgroundLabel.text = [NSString stringWithFormat:@"%@", @(_calendarManage.month)];
-        self.theDayInMonth = _calendarManage.todayInMonth;
         self.theYear = _calendarManage.year;
         [self reloadExternalDate];
     }
@@ -277,20 +275,24 @@
 - (void)checkCalendarWithAppointDate:(NSDate *)date
 {
     [self.calendarManage checkThisMonthRecordFromToday:date];
-    self.monthBackgroundLabel.text = [NSString stringWithFormat:@"%@", @(self.calendarManage.month)];
     [self.calendarCollectionView reloadData];
+    self.theDate = date;
     [self reloadExternalDate];
 }
 
 #pragma mark - 更新外部数据
 - (void)reloadExternalDate
 {
-    self.year = self.calendarManage.year;
-    self.month = self.calendarManage.month;
-    self.chineseYear = self.calendarManage.chineseYear;
-    self.chineseMonth = self.calendarManage.chineseMonth;
-    self.chineseCalendarDay = self.calendarManage.chineseCalendarDay;
-    self.chineseCalendarDate = self.calendarManage.chineseCalendarDate;
+    self.year = _calendarManage.year;
+    self.month = _calendarManage.month;
+    self.chineseYear = _calendarManage.chineseYear;
+    self.chineseMonth = _calendarManage.chineseMonth;
+    self.theDayInMonth = _calendarManage.todayInMonth;
+    self.chineseCalendarDay = _calendarManage.chineseCalendarDay;
+    self.chineseCalendarDate = _calendarManage.chineseCalendarDate;
+    self.monthBackgroundLabel.text = [NSString stringWithFormat:@"%@", @(_calendarManage.month)];
+    self.lastMonth = _calendarManage.month - 1;
+    self.nextMonth = _calendarManage.month + 1;
 }
 
 #pragma mark - 获取节日&节气
