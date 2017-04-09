@@ -10,6 +10,9 @@
 #import "SKConstant.h"
 
 @interface SKCalendarManage ()
+@property (nonatomic, strong) NSDateFormatter * dateFormatter;
+@property (nonatomic, strong) NSDateFormatter * strDateFormatter;
+@property (nonatomic, strong) NSDate * baseDate;
 
 @end
 
@@ -25,6 +28,32 @@
     });
     
     return manageSinglenton;
+}
+
+- (NSDateFormatter *)dateFormatter
+{
+    if (!_dateFormatter) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        [_dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    }
+    return _dateFormatter;
+}
+
+- (NSDateFormatter *)strDateFormatter
+{
+    if (!_strDateFormatter) {
+        _strDateFormatter = [[NSDateFormatter alloc] init];
+        [_strDateFormatter setDateFormat:@"MM-dd"];
+    }
+    return _strDateFormatter;
+}
+
+- (NSDate *)baseDate
+{
+    if (!_baseDate) {
+        _baseDate = [self.dateFormatter dateFromString:@"1900-1-1"];
+    }
+    return _baseDate;
 }
 
 #pragma mark - 查看所选日期所处的月份
@@ -313,9 +342,9 @@
                                 @"12-24":@"平安夜",
                                 @"12-25":@"圣诞节"};
     
-    NSDateFormatter * dateFormatt= [[NSDateFormatter alloc] init];
-    [dateFormatt setDateFormat:@"MM-dd"];
-    NSString * nowStr = [dateFormatt stringFromDate:date];
+//    NSDateFormatter * dateFormatt= [[NSDateFormatter alloc] init];
+//    [dateFormatt setDateFormat:@"MM-dd"];
+    NSString * nowStr = [self.strDateFormatter stringFromDate:date];
     // 复活节, Meeus/Jones/Butcher算法
     NSUInteger a = self.year % 19;
     NSUInteger b = self.year / 100;
@@ -592,15 +621,10 @@
 {
     NSString * solarTerms = @"";
     CGFloat base = 365.242 * (year - 1900) + 6.2 + (15.22 * index) - (1.9 * sinf(0.262 * index));// 计算积日
-    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"YYYY-MM-dd"];
-    NSDate * baseDate = [dateFormatter dateFromString:@"1900-1-1"];
     NSInteger hours = (base - 1) * 24;// 由于基准日为1900年1月0日，所以这里需要-1
-    NSDate * date = [NSDate dateWithTimeInterval:hours * 60 * 60 sinceDate:baseDate];
+    NSDate * date = [NSDate dateWithTimeInterval:hours * 60 * 60 sinceDate:self.baseDate];
    
-    NSDateFormatter * strDateFormatter = [[NSDateFormatter alloc] init];
-    [strDateFormatter setDateFormat:@"MM-dd"];
-    solarTerms = [strDateFormatter stringFromDate:date];
+    solarTerms = [self.strDateFormatter stringFromDate:date];
     
     
     return solarTerms;
