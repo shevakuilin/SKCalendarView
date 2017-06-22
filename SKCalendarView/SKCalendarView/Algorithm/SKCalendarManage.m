@@ -93,6 +93,8 @@
     self.theMonth = [theComps month];// 本月的月份
     NSUInteger day = [comps day];// 是本月第几天
     self.todayInMonth = day;
+    NSString *dateStr = [self.dateFormatter stringFromDate:date];
+    NSString *todayStr = [self.dateFormatter stringFromDate:[NSDate date]];
     if (day > 1) {// 如果不是本月第一天
         // 将日期推算到本月第一天
         NSInteger hours = (day - 1) * -24;
@@ -102,6 +104,9 @@
     self.dayInWeek = [comps weekday];// 是周几
     self.year = [comps year];// 公历年
     self.month = [comps month];// 公里月
+    if ([dateStr isEqualToString:todayStr]) {
+        self.todayPosition = day + self.dayInWeek - 2;
+    }
 
     [self creatcalendarArrayWithDate:date];
 }

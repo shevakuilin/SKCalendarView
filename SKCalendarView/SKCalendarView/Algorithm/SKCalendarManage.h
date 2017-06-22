@@ -27,5 +27,6 @@
 @property (assign, nonatomic) NSUInteger theMonth;// 本月
 @property (strong, nonatomic) NSString * chineseYear;// 农历年
 @property (strong, nonatomic) NSString * chineseMonth;// 农历月
+@property (assign, nonatomic) NSUInteger todayPosition;// 今天在所属月份中所处位置
 
 @end

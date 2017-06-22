@@ -210,6 +210,7 @@
 				TargetAttributes = {
 					E46BB9141E8B678400A1E1C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = HPWGTQE54D;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -425,9 +426,11 @@
 			baseConfigurationReference = 6841B559C4AF4A4F31494B4D /* Pods-SKCalendarView.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = HPWGTQE54D;
 				INFOPLIST_FILE = SKCalendarView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = xkl.SKCalendarView;
+				PRODUCT_BUNDLE_IDENTIFIER = xkl.SKCalendarView1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -437,9 +440,11 @@
 			baseConfigurationReference = D40120A811C0307FFDDA7152 /* Pods-SKCalendarView.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = HPWGTQE54D;
 				INFOPLIST_FILE = SKCalendarView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = xkl.SKCalendarView;
+				PRODUCT_BUNDLE_IDENTIFIER = xkl.SKCalendarView1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
