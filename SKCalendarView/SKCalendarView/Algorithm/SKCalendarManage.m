@@ -12,6 +12,7 @@
 @interface SKCalendarManage ()
 @property (nonatomic, strong) NSDateFormatter * dateFormatter;
 @property (nonatomic, strong) NSDateFormatter * strDateFormatter;
+@property (strong, nonatomic) NSString * chineseMonth;
 @property (nonatomic, strong) NSDate * baseDate;
 
 @end
@@ -117,10 +118,12 @@
     self.calendarDate = [NSMutableArray new];
     self.chineseCalendarDate = [NSMutableArray new];
     self.chineseCalendarDay = [NSMutableArray new];
+    self.chineseCalendarMonth = [NSMutableArray new];
     for (NSInteger j = 0; j < 42; j ++) {// 创建空占位数组
         [self.calendarDate addObject:@""];
         [self.chineseCalendarDate addObject:@""];
         [self.chineseCalendarDay addObject:@""];
+        [self.chineseCalendarMonth addObject:@""];
     }
     // 向前推算日期到本月第一天
     NSDate * firstDay = date;
@@ -137,6 +140,7 @@
                     [self.chineseCalendarDate replaceObjectAtIndex:j - 1 withObject:chineseDay];// 替换农历日期
                     NSString * noHoliday = [self calculationChinaCalendarWithDate:date dispalyHoliday:NO];
                     [self.chineseCalendarDay replaceObjectAtIndex:j - 1 withObject:noHoliday];
+                    [self.chineseCalendarMonth replaceObjectAtIndex:j - 1 withObject:self.chineseMonth];
                 }
             }
             self.isIncreaseHeight = NO;
@@ -155,6 +159,7 @@
                             [self.chineseCalendarDate replaceObjectAtIndex:j - 1 withObject:chineseDay];// 替换农历日期
                             NSString * noHoliday = [self calculationChinaCalendarWithDate:date dispalyHoliday:NO];
                             [self.chineseCalendarDay replaceObjectAtIndex:j - 1 withObject:noHoliday];
+                            [self.chineseCalendarMonth replaceObjectAtIndex:j - 1 withObject:self.chineseMonth];
                         }
                     }
 
@@ -176,6 +181,7 @@
                             [self.chineseCalendarDate replaceObjectAtIndex:j - 1 withObject:chineseDay];// 替换农历日期
                             NSString * noHoliday = [self calculationChinaCalendarWithDate:date dispalyHoliday:NO];
                             [self.chineseCalendarDay replaceObjectAtIndex:j - 1 withObject:noHoliday];
+                            [self.chineseCalendarMonth replaceObjectAtIndex:j - 1 withObject:self.chineseMonth];
                         }
                     }
 
@@ -197,6 +203,7 @@
                             [self.chineseCalendarDate replaceObjectAtIndex:j - 1 withObject:chineseDay];// 替换农历日期
                             NSString * noHoliday = [self calculationChinaCalendarWithDate:date dispalyHoliday:NO];
                             [self.chineseCalendarDay replaceObjectAtIndex:j - 1 withObject:noHoliday];
+                            [self.chineseCalendarMonth replaceObjectAtIndex:j - 1 withObject:self.chineseMonth];
                         }
                     }
 
@@ -218,6 +225,7 @@
                             [self.chineseCalendarDate replaceObjectAtIndex:j - 1 withObject:chineseDay];// 替换农历日期
                             NSString * noHoliday = [self calculationChinaCalendarWithDate:date dispalyHoliday:NO];
                             [self.chineseCalendarDay replaceObjectAtIndex:j - 1 withObject:noHoliday];
+                            [self.chineseCalendarMonth replaceObjectAtIndex:j - 1 withObject:self.chineseMonth];
                         }
                     }
 
@@ -239,6 +247,7 @@
                             [self.chineseCalendarDate replaceObjectAtIndex:j - 1 withObject:chineseDay];// 替换农历日期
                             NSString * noHoliday = [self calculationChinaCalendarWithDate:date dispalyHoliday:NO];
                             [self.chineseCalendarDay replaceObjectAtIndex:j - 1 withObject:noHoliday];
+                            [self.chineseCalendarMonth replaceObjectAtIndex:j - 1 withObject:self.chineseMonth];
                         }
                     }
 
@@ -264,6 +273,7 @@
                             [self.chineseCalendarDate replaceObjectAtIndex:j - 1 withObject:chineseDay];// 替换农历日期
                             NSString * noHoliday = [self calculationChinaCalendarWithDate:date dispalyHoliday:NO];
                             [self.chineseCalendarDay replaceObjectAtIndex:j - 1 withObject:noHoliday];
+                            [self.chineseCalendarMonth replaceObjectAtIndex:j - 1 withObject:self.chineseMonth];
                         }
                     }
 
@@ -300,6 +310,7 @@
     self.chineseYear = [chineseYears objectAtIndex:localeComp.year - 1];
     NSString * m_str = [chineseMonths objectAtIndex:localeComp.month - 1];
     self.chineseMonth = m_str;
+    
     NSString * d_str = [chineseDays objectAtIndex:localeComp.day - 1];
 
     NSString * chineseCal_str = d_str;

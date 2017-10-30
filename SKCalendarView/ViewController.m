@@ -79,7 +79,7 @@
     self.chineseMonthAndDayLabel.font = [UIFont systemFontOfSize:15];
     self.chineseMonthAndDayLabel.textColor = [UIColor redColor];
     // 默认农历日期 今天
-    self.chineseMonthAndDayLabel.text = [NSString stringWithFormat:@"%@%@", self.calendarView.chineseMonth, getNoneNil(self.calendarView.chineseCalendarDay[self.calendarView.todayInMonth])];
+    self.chineseMonthAndDayLabel.text = [NSString stringWithFormat:@"%@%@", self.calendarView.chineseCalendarMonth[self.calendarView.todayInMonth - 1], getNoneNil(self.calendarView.chineseCalendarDay[self.calendarView.todayInMonth])];
     self.chineseMonthAndDayLabel.textAlignment = NSTextAlignmentCenter;
     [self.chineseMonthAndDayLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.chineseYearLabel.mas_bottom).with.offset(5);
@@ -191,7 +191,7 @@
 #pragma mark - 点击日期
 - (void)selectDateWithRow:(NSUInteger)row
 {
-    self.chineseMonthAndDayLabel.text = [NSString stringWithFormat:@"%@%@", self.calendarView.chineseMonth, getNoneNil(self.calendarView.chineseCalendarDay[row])];
+    self.chineseMonthAndDayLabel.text = [NSString stringWithFormat:@"%@%@", self.calendarView.chineseCalendarMonth[row], getNoneNil(self.calendarView.chineseCalendarDay[row])];
     // 获取节日，注意：此处传入的参数为chineseCalendarDay(不包含节日等信息)
     self.holidayLabel.text = [self.calendarView getHolidayAndSolarTermsWithChineseDay:getNoneNil(self.calendarView.chineseCalendarDay[row])];
 }

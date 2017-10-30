@@ -286,8 +286,8 @@
     self.year = _calendarManage.year;
     self.month = _calendarManage.month;
     self.chineseYear = _calendarManage.chineseYear;
-    self.chineseMonth = _calendarManage.chineseMonth;
     self.theDayInMonth = _calendarManage.todayPosition;
+    self.chineseCalendarMonth = _calendarManage.chineseCalendarMonth;
     self.chineseCalendarDay = _calendarManage.chineseCalendarDay;
     self.chineseCalendarDate = _calendarManage.chineseCalendarDate;
     self.monthBackgroundLabel.text = [NSString stringWithFormat:@"%@", @(_calendarManage.month)];
