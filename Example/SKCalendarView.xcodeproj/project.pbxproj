@@ -113,11 +113,11 @@
 		9FEB30C92201AEA10064DFD9 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				9FEB30CA2201AEA10064DFD9 /* SKCalendarCollectionViewCell.h */,
 				9FEB30CB2201AEA10064DFD9 /* SKCalendarView.h */,
+				9FEB30CE2201AEA10064DFD9 /* SKCalendarView.m */,
 				9FEB30CC2201AEA10064DFD9 /* SKWeekCollectionViewCell.m */,
 				9FEB30CD2201AEA10064DFD9 /* SKWeekCollectionViewCell.h */,
-				9FEB30CE2201AEA10064DFD9 /* SKCalendarView.m */,
+				9FEB30CA2201AEA10064DFD9 /* SKCalendarCollectionViewCell.h */,
 				9FEB30CF2201AEA10064DFD9 /* SKCalendarCollectionViewCell.m */,
 			);
 			path = View;

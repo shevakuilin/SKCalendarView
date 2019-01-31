@@ -6,7 +6,7 @@ SKCalendarView是一个高可控性的日历基础组件，为了提高应用的
 ![](https://img.shields.io/badge/platform-iOS-green.svg)
 ![](https://img.shields.io/badge/pod-v1.6.0.beta.1-blue.svg)
 ![](https://img.shields.io/badge/language-ObjectiveC-purple.svg)
-![](https://img.shields.io/badge/moduleVersion-v0.0.5-red.svg)
+![](https://img.shields.io/badge/moduleVersion-v0.0.6-red.svg)
 
 ### 效果图 
 <img src="https://upload-images.jianshu.io/upload_images/2660903-ba85803b324977a6.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/372/format/webp" width="370" height ="665" />

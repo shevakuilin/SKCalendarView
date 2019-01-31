@@ -12,7 +12,7 @@
 @interface SKCalendarManage ()
 @property (nonatomic, strong) NSDateFormatter * dateFormatter;
 @property (nonatomic, strong) NSDateFormatter * strDateFormatter;
-@property (strong, nonatomic) NSString * chineseMonth;
+@property (nonatomic, copy) NSString * chineseMonth;
 @property (nonatomic, strong) NSDate * baseDate;
 
 @end

@@ -27,7 +27,7 @@
 @property (nonatomic, strong) UIColor * solarTeromBackgroundColor;// 节气背景颜色
 @property (nonatomic, strong) UIColor * dateBackgroundColor;// 日期背景颜色(非节日&节气)
 @property (nonatomic, strong) UIImage * dateBackgroundIcon;// 日期背景图片
-@property (nonatomic, strong) NSString * calendarTodayTitle;// 本日日期标题
+@property (nonatomic, copy) NSString * calendarTodayTitle;// 本日日期标题
 @property (nonatomic, strong) UIColor * calendarTodayTitleColor;// 本日日期标题字体颜色
 @property (nonatomic, strong) UIColor * calendarTitleColor;// 日期标题字体颜色
 @property (nonatomic, strong) UIColor * holidayColor;// 节日标题字体颜色
@@ -44,13 +44,13 @@
 @property (nonatomic, assign) NSUInteger nextMonth;// 下个月
 @property (nonatomic, assign) BOOL checkLastMonth;// 查看上个月
 @property (nonatomic, assign) BOOL checkNextMonth;// 查看下个月
-@property (assign, nonatomic) NSUInteger year;// 当前年
-@property (assign, nonatomic) NSUInteger month;// 当前月
-@property (strong, nonatomic) NSString * chineseYear;// 农历年
-@property (strong, nonatomic) NSMutableArray * chineseCalendarDay;// 农历纯日期(不包含节日和节气)
-@property (strong, nonatomic) NSMutableArray * chineseCalendarDate;// 农历日期&节日&节气
-@property (strong, nonatomic) NSMutableArray * chineseCalendarMonth;// 农历月份
-@property (assign, nonatomic) NSInteger todayInMonth;// 今天在本月是第几天
+@property (nonatomic, assign) NSUInteger year;// 当前年
+@property (nonatomic, assign) NSUInteger month;// 当前月
+@property (nonatomic, copy) NSString * chineseYear;// 农历年
+@property (nonatomic, strong) NSMutableArray * chineseCalendarDay;// 农历纯日期(不包含节日和节气)
+@property (nonatomic, strong) NSMutableArray * chineseCalendarDate;// 农历日期&节日&节气
+@property (nonatomic, strong) NSMutableArray * chineseCalendarMonth;// 农历月份
+@property (nonatomic, assign) NSInteger todayInMonth;// 今天在本月是第几天
 
 /** 根据农历日期获取节日&节气
  * @param chineseDay 农历纯日期(不包括节日&节气)
