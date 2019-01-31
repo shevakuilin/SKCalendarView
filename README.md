@@ -108,7 +108,7 @@ self.holidayLabel.text = [self.calendarView getHolidayAndSolarTermsWithChineseDa
 @property (nonatomic, strong) UIColor * solarTeromBackgroundColor;// 节气背景颜色
 @property (nonatomic, strong) UIColor * dateBackgroundColor;// 日期背景颜色(非节日&节气)
 @property (nonatomic, strong) UIImage * dateBackgroundIcon;// 日期背景图片
-@property (nonatomic, strong) NSString * calendarTodayTitle;// 本日日期标题
+@property (nonatomic, copy) NSString * calendarTodayTitle;// 本日日期标题
 @property (nonatomic, strong) UIColor * calendarTodayTitleColor;// 本日日期标题字体颜色
 @property (nonatomic, strong) UIColor * calendarTitleColor;// 日期标题字体颜色
 @property (nonatomic, strong) UIColor * holidayColor;// 节日标题字体颜色
