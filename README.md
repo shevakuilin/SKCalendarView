@@ -126,8 +126,9 @@ self.holidayLabel.text = [self.calendarView getHolidayAndSolarTermsWithChineseDa
 - (void)selectDateWithRow:(NSUInteger)row
 ```
 
-#### Q & A
+# Q & A
 Q: 怎样获取当前选择日期
+
 A: 如果是直接获取已选中的公历日期的话，可以通过将选中索引传入到SKCalendarManage类的calendarDate数组中来获取已选中的日期，年和月都是可以直接通过读取year和month来获取。
 如果是想到直接获取到xxxx-xx-xx格式的日期，因为具体格式可能因需求而异，所以目前没有直接提供相应的方法。后续可以考虑添加相应支持。
 
